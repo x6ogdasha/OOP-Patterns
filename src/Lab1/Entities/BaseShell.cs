@@ -1,6 +1,5 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities;
 
-public abstract class BaseShell
+public abstract class BaseShell : Protection
 {
-    public bool IsProtected { get; private set; }
 }
