@@ -7,5 +7,5 @@ public abstract class BaseShip
     public abstract BaseEngine Engine { get; set; }
     public abstract BaseDeflector? Deflector { get; set; }
     public ShipSize Size { get; private set; }
-    public abstract BaseUnbreakingRank UnbreakingRank { get; set; }
+    public abstract BaseShell Shell { get; set; }
 }
