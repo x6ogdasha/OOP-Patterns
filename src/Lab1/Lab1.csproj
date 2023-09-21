@@ -6,8 +6,6 @@
 
     <ItemGroup>
       <Folder Include="Models\Environments\" />
-      <Folder Include="Models\Shells\" />
-      <Folder Include="Models\Ships\" />
       <Folder Include="Services\" />
     </ItemGroup>
 
