@@ -6,6 +6,6 @@ public class AntiMatterFlare : BaseObstacle
 {
     public AntiMatterFlare()
     {
-        Damage = 0;
+        Damage = 1;
     }
 }

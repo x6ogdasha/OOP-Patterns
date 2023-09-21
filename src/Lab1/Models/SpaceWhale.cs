@@ -6,6 +6,6 @@ public class SpaceWhale : BaseObstacle
 {
     public SpaceWhale()
     {
-        Damage = 100;
+        Damage = 300;
     }
 }
