@@ -1,11 +1,11 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities;
 
-namespace Itmo.ObjectOrientedProgramming.Lab1.Models;
+namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Obstacles;
 
 public class Asteroid : BaseObstacle
 {
     public Asteroid()
     {
-        Damage = 5;
+        Damage = 10;
     }
 }
