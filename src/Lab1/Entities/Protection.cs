@@ -1,3 +1,4 @@
+using System;
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities;
 
 public abstract class Protection
@@ -5,11 +6,15 @@ public abstract class Protection
     public double HealthPoints { get; protected set; }
     public bool IsActive { get; protected set; }
 
-    public void GetDamage(BaseObstacle? obstacle)
+    public virtual void TakeDamage(BaseObstacle? obstacle, int numberOfObstacles)
     {
         if (obstacle != null)
         {
-            HealthPoints -= obstacle.Damage;
+            HealthPoints -= obstacle.Damage * numberOfObstacles;
+        }
+        else
+        {
+            throw new ArgumentNullException(nameof(obstacle));
         }
 
         if (HealthPoints <= 0)

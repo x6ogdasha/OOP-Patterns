@@ -10,4 +10,10 @@ public abstract class BaseShip
     public ShipSize Size { get; protected set; }
     public BaseShell? Shell { get; protected set; }
     public bool AntiNitrineRadiant { get; protected set; }
+
+    public void TakeDamage(BaseObstacle obstacle, int numberOfObstacles)
+    {
+        Deflector?.TakeDamage(obstacle, numberOfObstacles);
+        Shell?.TakeDamage(obstacle, numberOfObstacles);
+    }
 }
