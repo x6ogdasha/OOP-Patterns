@@ -6,6 +6,6 @@ public class Asteroid : BaseObstacle
 {
     public Asteroid()
     {
-        Damage = 10;
+        Damage = 5;
     }
 }

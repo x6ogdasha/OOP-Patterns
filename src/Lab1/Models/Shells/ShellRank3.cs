@@ -6,6 +6,7 @@ public class ShellRank3 : BaseShell
 {
     public ShellRank3()
     {
-        HealthPoints = 1000;
+        HealthPoints = 100;
+        IsActive = true;
     }
 }

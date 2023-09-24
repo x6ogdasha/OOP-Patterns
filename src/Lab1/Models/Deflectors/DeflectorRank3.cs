@@ -6,7 +6,7 @@ public class DeflectorRank3 : BaseDeflector
 {
     public DeflectorRank3()
     {
-        HealthPoints = 600;
+        HealthPoints = 200;
         IsActive = true;
     }
 }
