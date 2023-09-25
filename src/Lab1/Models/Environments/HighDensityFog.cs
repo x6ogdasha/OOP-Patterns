@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Obstacles;
@@ -14,11 +12,19 @@ public class HighDensityFog : BaseEnvironment
         HasObstacle = false;
     }
 
-    public override void AddObstacle(IEnumerable<BaseObstacle> obstacles)
+    public override void AddObstacle(BaseObstacle obstacle, int obstacleNumber)
     {
-        Obstacles = obstacles.Where(p =>
-            p.GetType() == typeof(AntiMatterFlare));
-        HasObstacle = true;
+        if (obstacle == null) throw new ArgumentNullException(nameof(obstacle));
+        if (obstacle.GetType() == typeof(AntiMatterFlare))
+        {
+            FirstObstacle = obstacle;
+            FirstObstacleNumber = obstacleNumber;
+            HasObstacle = true;
+        }
+        else
+        {
+            throw new FormatException("Can't add Obstacle");
+        }
     }
 
     public override bool IsEngineAllowed(BaseEngine engine)

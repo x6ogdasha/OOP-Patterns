@@ -1,10 +1,11 @@
-using System.Collections.Generic;
-
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities;
 
 public abstract class BaseEnvironment
 {
-   public IEnumerable<BaseObstacle>? Obstacles { get; protected set; }
+   public BaseObstacle? FirstObstacle { get; protected set; }
+   public BaseObstacle? SecondObstacle { get; protected set; }
+   public int? FirstObstacleNumber { get; protected set; }
+   public int? SecondObstacleNumber { get; protected set; }
    public bool HasObstacle { get; protected set; }
    public virtual string Status => $"{GetType().Name} {GetHashCode()}: {(HasObstacle ? "Has obstacle" : "Has NOT obstacle")}";
 
@@ -13,8 +14,17 @@ public abstract class BaseEnvironment
       return true;
    }
 
-   public virtual void AddObstacle(IEnumerable<BaseObstacle> obstacles)
+   public virtual void AddObstacle(BaseObstacle obstacle, int obstacleNumber)
    {
-      Obstacles = obstacles;
+      FirstObstacle = obstacle;
+      FirstObstacleNumber = obstacleNumber;
+   }
+
+   public virtual void AddObstacle(BaseObstacle firstObstacle, int firstObstacleNumber, BaseObstacle secondObstacle, int secondObstacleNumber)
+   {
+      FirstObstacle = firstObstacle;
+      SecondObstacle = secondObstacle;
+      FirstObstacleNumber = firstObstacleNumber;
+      SecondObstacleNumber = secondObstacleNumber;
    }
 }

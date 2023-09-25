@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Obstacles;
 
@@ -12,11 +11,29 @@ public class Space : BaseEnvironment
         HasObstacle = false;
     }
 
-    public override void AddObstacle(IEnumerable<BaseObstacle> obstacles)
+    public override void AddObstacle(BaseObstacle obstacle, int obstacleNumber)
     {
-        Obstacles = obstacles.Where(p =>
-            p.GetType() == typeof(Meteorit) ||
-            p.GetType() == typeof(Asteroid));
-        HasObstacle = true;
+        if (obstacle == null) throw new ArgumentNullException(nameof(obstacle));
+        if (obstacle.GetType() == typeof(Asteroid) || obstacle.GetType() == typeof(Meteorit))
+        {
+            FirstObstacle = obstacle;
+            FirstObstacleNumber = obstacleNumber;
+            HasObstacle = true;
+        }
+    }
+
+    public override void AddObstacle(BaseObstacle firstObstacle, int firstObstacleNumber, BaseObstacle secondObstacle, int secondObstacleNumber)
+    {
+        if (firstObstacle == null) throw new ArgumentNullException(nameof(firstObstacle));
+        if (secondObstacle == null) throw new ArgumentNullException(nameof(secondObstacle));
+        if ((firstObstacle.GetType() == typeof(Asteroid) && secondObstacleNumber.GetType() == typeof(Meteorit)) ||
+            (firstObstacle.GetType() == typeof(Meteorit) && secondObstacle.GetType() == typeof(Asteroid)))
+        {
+            FirstObstacle = firstObstacle;
+            SecondObstacle = secondObstacle;
+            FirstObstacleNumber = firstObstacleNumber;
+            SecondObstacleNumber = secondObstacleNumber;
+            HasObstacle = true;
+        }
     }
 }
