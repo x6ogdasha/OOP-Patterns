@@ -7,15 +7,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Environments;
 
 public class Space : BaseEnvironment
 {
-    private IEnumerable<BaseObstacle>? _obstacles;
-    public Space(IEnumerable<BaseObstacle> obstacles)
-   {
-           _obstacles = obstacles.Where(p =>
-               p.GetType() == typeof(Meteorit) ||
-               p.GetType() == typeof(Asteroid));
-   }
-
     public Space()
     {
+        HasObstacle = false;
+    }
+
+    public override void AddObstacle(IEnumerable<BaseObstacle> obstacles)
+    {
+        Obstacles = obstacles.Where(p =>
+            p.GetType() == typeof(Meteorit) ||
+            p.GetType() == typeof(Asteroid));
+        HasObstacle = true;
     }
 }
