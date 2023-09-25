@@ -7,7 +7,7 @@ public class EngineGamma : BaseEngine
 {
     public EngineGamma()
     {
-        FuelRate = 200;
+        FuelRate = 250;
         Capacity = 500;
         Fuel = FuelType.GravitationalMatter;
     }

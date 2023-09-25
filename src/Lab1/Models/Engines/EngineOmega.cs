@@ -7,7 +7,7 @@ public class EngineOmega : BaseEngine
 {
     public EngineOmega()
     {
-        FuelRate = 50;
+        FuelRate = 150;
         Capacity = 1500;
         Fuel = FuelType.GravitationalMatter;
     }
