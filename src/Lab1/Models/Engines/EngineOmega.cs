@@ -9,7 +9,7 @@ public class EngineOmega : BaseEngine
         FuelСost = GravitationalMatterCost;
     }
 
-    public override double Move(double distance)
+    public override double? Move(double distance)
     {
         if (distance <= FuelRate)
         {
@@ -17,7 +17,7 @@ public class EngineOmega : BaseEngine
         }
         else
         {
-            return -1;
+            return null;
         }
     }
 }

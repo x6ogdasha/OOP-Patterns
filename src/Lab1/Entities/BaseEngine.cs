@@ -14,8 +14,8 @@ public abstract class BaseEngine
         IsRunning = true;
     }
 
-    public virtual double Move(double distance)
+    public virtual double? Move(double distance)
     {
-        return 0;
+        return null;
     }
 }

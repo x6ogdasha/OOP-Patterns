@@ -18,7 +18,7 @@ public class Path
    public bool ShipIsBroken { get; protected set; }
    public bool ShipIsEscaped { get; protected set; }
    public double FuelOnPath { get; protected set; }
-   public double TimeOnPath { get; protected set; }
+   public double? TimeOnPath { get; protected set; }
 
    public bool IsPassed(BaseShip ship)
    {
@@ -68,7 +68,7 @@ public class Path
          }
 
          TimeOnPath = ship.TimeToMove(currentEngine, _distance);
-         if (TimeOnPath > 0)
+         if (TimeOnPath != null)
          {
             Successful = true;
             FuelOnPath = currentEngine.FuelRate * _distance;

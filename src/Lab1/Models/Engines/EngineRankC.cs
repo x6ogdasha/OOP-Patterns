@@ -14,7 +14,7 @@ public class EngineRankC : BaseEngine
         IsRunning = true;
     }
 
-    public override double Move(double distance)
+    public override double? Move(double distance)
     {
         return distance / FuelRate;
     }

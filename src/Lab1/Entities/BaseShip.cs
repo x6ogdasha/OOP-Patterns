@@ -31,7 +31,7 @@ public abstract class BaseShip
         }
     }
 
-    public virtual double TimeToMove(BaseEngine engine, double distance)
+    public virtual double? TimeToMove(BaseEngine engine, double distance)
     {
         if (engine == null) throw new ArgumentNullException(nameof(engine));
         return engine.Move(distance);
