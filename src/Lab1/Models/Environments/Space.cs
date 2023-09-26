@@ -1,5 +1,6 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Obstacles;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Environments;
@@ -8,7 +9,8 @@ public class Space : BaseEnvironment
 {
     public Space()
     {
-        HasObstacle = false;
+        HasFirstObstacle = false;
+        HasSecondObstacle = false;
     }
 
     public override void AddObstacle(BaseObstacle obstacle, int obstacleNumber)
@@ -18,7 +20,8 @@ public class Space : BaseEnvironment
         {
             FirstObstacle = obstacle;
             FirstObstacleNumber = obstacleNumber;
-            HasObstacle = true;
+            HasFirstObstacle = true;
+            HasSecondObstacle = false;
         }
     }
 
@@ -33,7 +36,14 @@ public class Space : BaseEnvironment
             SecondObstacle = secondObstacle;
             FirstObstacleNumber = firstObstacleNumber;
             SecondObstacleNumber = secondObstacleNumber;
-            HasObstacle = true;
+            HasFirstObstacle = true;
+            HasSecondObstacle = true;
         }
+    }
+
+    public override bool IsEngineAllowed(BaseEngine engine)
+    {
+        if (engine == null) throw new ArgumentNullException(nameof(engine));
+        return (engine.GetType() == typeof(EngineRankE)) || (engine.GetType() == typeof(EngineRankC));
     }
 }

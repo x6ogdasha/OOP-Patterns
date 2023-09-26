@@ -9,7 +9,8 @@ public class HighDensityFog : BaseEnvironment
 {
     public HighDensityFog()
     {
-        HasObstacle = false;
+        HasFirstObstacle = false;
+        HasSecondObstacle = false;
     }
 
     public override void AddObstacle(BaseObstacle obstacle, int obstacleNumber)
@@ -19,7 +20,9 @@ public class HighDensityFog : BaseEnvironment
         {
             FirstObstacle = obstacle;
             FirstObstacleNumber = obstacleNumber;
-            HasObstacle = true;
+            SecondObstacleNumber = 0;
+            HasFirstObstacle = true;
+            HasSecondObstacle = false;
         }
         else
         {
