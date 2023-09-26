@@ -1,6 +1,4 @@
 using Itmo.ObjectOrientedProgramming.Lab1.Entities;
-using Itmo.ObjectOrientedProgramming.Lab1.Helpers;
-
 namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Engines;
 
 public class EngineRankE : BaseEngine
@@ -8,13 +6,16 @@ public class EngineRankE : BaseEngine
     public EngineRankE()
     {
         FuelRate = 5.0;
-        Capacity = 500;
-        Fuel = FuelType.ActivePlasma;
+        FuelСost = ActivePlasmaCost;
     }
 
     public override void Run()
     {
         IsRunning = true;
-        Capacity -= 1;
+    }
+
+    public override double Move(double distance)
+    {
+        return distance / FuelRate;
     }
 }
