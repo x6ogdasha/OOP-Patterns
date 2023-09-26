@@ -6,6 +6,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities;
 public abstract class BaseDeflector : Protection
 {
     public bool PhotonDeflector { get; protected set; }
+    public bool KillCrew { get; protected set; }
+
     public override void TakeDamage(BaseObstacle? obstacle, int numberOfObstacles)
     {
         if (obstacle != null)
@@ -26,6 +28,7 @@ public abstract class BaseDeflector : Protection
         if (obstacle.GetType() == typeof(AntiMatterFlare) && PhotonDeflector == false)
         {
             IsActive = false;
+            KillCrew = true;
         }
     }
 }
