@@ -17,6 +17,7 @@ public class Path
    public bool CrewIsDead { get; protected set; }
    public bool ShipIsBroken { get; protected set; }
    public bool ShipIsEscaped { get; protected set; }
+   public bool IsShipDenied { get; protected set; }
    public double FuelOnPath { get; protected set; }
    public double? TimeOnPath { get; protected set; }
 
@@ -81,7 +82,10 @@ public class Path
             return false;
          }
       }
-
-      return false;
+      else
+      {
+         IsShipDenied = true;
+         return false;
+      }
    }
 }
