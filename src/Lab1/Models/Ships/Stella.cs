@@ -11,7 +11,7 @@ public class Stella : BaseShip
     public Stella()
     {
         MainEngine = new EngineRankC();
-        AdditionalEngine = new EngineAlpha();
+        AdditionalEngine = new EngineOmega();
         Deflector = new DeflectorRank1();
         Shell = new ShellRank1();
         Size = ShipSize.Small;
