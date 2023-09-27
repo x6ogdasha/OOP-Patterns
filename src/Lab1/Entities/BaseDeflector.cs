@@ -6,7 +6,13 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Entities;
 public abstract class BaseDeflector : Protection
 {
     public bool PhotonDeflector { get; protected set; }
+    public double RemainingDamage { get; protected set; }
     public bool KillCrew { get; protected set; }
+
+    public void TurnOnPhotonDeflector()
+    {
+        PhotonDeflector = true;
+    }
 
     public override void TakeDamage(BaseObstacle? obstacle, int numberOfObstacles)
     {
