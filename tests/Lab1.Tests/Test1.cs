@@ -142,4 +142,31 @@ public class Test1
         // assert
         Assert.Equal("First is denied, Second is allowed", status);
     }
+
+    [Fact]
+    public void Test7ManyPath()
+    {
+        // arrange
+        var ship1 = new Meredian();
+        var environment1 = new Space();
+        var environment2 = new NitrineParticleFog();
+        var environment3 = new Space();
+        var obstacle = new Meteorit();
+        environment3.AddObstacle(obstacle, 2);
+        var path1 = new Path(environment1, 100);
+        var path2 = new Path(environment2, 300);
+        var path3 = new Path(environment3, 150);
+        IList<Path> pathes = new List<Path>();
+        pathes.Add(path1);
+        pathes.Add(path2);
+        pathes.Add(path3);
+        var route = new Route(ship1, pathes);
+
+        // act
+        string status = route.IsRoutePassed();
+        string shipStatus = ship1.Status;
+
+        // assert
+        Assert.Equal("Deflector HP: 10, Shell HP: 25 Successful! Summary fuel: 2750, time: 110", shipStatus + " " + status);
+    }
 }
