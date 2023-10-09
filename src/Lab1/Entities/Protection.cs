@@ -1,4 +1,5 @@
-using System;
+using Itmo.ObjectOrientedProgramming.Lab1.Helpers.Exceptions;
+
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities;
 
 public abstract class Protection
@@ -8,13 +9,13 @@ public abstract class Protection
 
     public virtual void TakeDamage(BaseObstacle? obstacle, int numberOfObstacles)
     {
-        if (obstacle != null)
+        if (obstacle is not null)
         {
             HealthPoints -= obstacle.Damage * numberOfObstacles;
         }
         else
         {
-            throw new ArgumentNullException(nameof(obstacle));
+            throw new ObstacleNullException();
         }
 
         if (HealthPoints <= 0)

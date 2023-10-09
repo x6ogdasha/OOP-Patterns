@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab1.Helpers;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Environments;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Ships;
@@ -12,23 +13,25 @@ public class Test1
     public void Test1Awgur()
     {
         // arrange
-        string expected = "Fail! Ship is escaped";
         var ship = new Awgur();
         var secondShip = new PleasureShuttle();
         var environment = new HighDensityFog();
         var path = new Path(environment, 500);
+        var path2 = new Path(environment, 500);
         IList<Path> pathes = new List<Path>();
+        IList<Path> pathes2 = new List<Path>();
         pathes.Add(path);
+        pathes2.Add(path2);
         var route = new Route(ship, pathes);
-        var secondRoute = new Route(secondShip, pathes);
+        var secondRoute = new Route(secondShip, pathes2);
 
         // act
-        string status = route.IsRoutePassed();
-        string secondStatus = secondRoute.IsRoutePassed();
+        Status status = route.IsRoutePassed();
+        Status secondStatus = secondRoute.IsRoutePassed();
 
         // assert
-        Assert.Equal(expected, status);
-        Assert.Equal(expected, secondStatus);
+        Assert.Equal(Status.ShipIsEscaped, status);
+        Assert.Equal(Status.EngineIsDenied, secondStatus);
     }
 
     [Fact]
@@ -48,12 +51,12 @@ public class Test1
         var secondRoute = new Route(secondShip, pathes);
 
         // act
-        string status = route.IsRoutePassed();
-        string secondStatus = secondRoute.IsRoutePassed();
+        Status status = route.IsRoutePassed();
+        Status secondStatus = secondRoute.IsRoutePassed();
 
         // assert
-        Assert.Equal("Fail! Crew is dead", status);
-        Assert.Equal("Successful! Summary fuel: 62500, time: 1", secondStatus);
+        Assert.Equal(Status.CrewIsDead, status);
+        Assert.Equal(Status.Successful, secondStatus);
     }
 
     [Fact]
@@ -74,16 +77,17 @@ public class Test1
         var route3 = new Route(ship3, pathes);
 
         // act
-        string status1 = route1.IsRoutePassed();
+        Status status1 = route1.IsRoutePassed();
         route2.IsRoutePassed();
         string status2 = ship2.Status;
-        string status33 = route3.IsRoutePassed();
+        Status status33 = route3.IsRoutePassed();
         string status3 = ship3.Status;
 
         // assert
-        Assert.Equal("Fail! Ship is broken", status1);
+        Assert.Equal(Status.ShipIsBroken, status1);
         Assert.Equal("Deflector HP: 0, Shell HP: 100", status2);
-        Assert.Equal("Successful! Summary fuel: 1250, time: 50 Deflector HP: 50, Shell HP: 25", status33 + " " + status3);
+        Assert.Equal(Status.Successful, status33);
+        Assert.Equal("Deflector HP: 50, Shell HP: 25", status3);
     }
 
     [Fact]
@@ -99,10 +103,10 @@ public class Test1
         var route = new Route(ship1, ship2, pathes);
 
         // act
-        string status = route.HowIsBetter();
+        Status status = route.HowIsBetter();
 
         // assert
-        Assert.Equal("First is better", status);
+        Assert.Equal(Status.FirstIsBetter, status);
     }
 
     [Fact]
@@ -118,10 +122,10 @@ public class Test1
         var route = new Route(ship1, ship2, pathes);
 
         // act
-        string status = route.HowIsBetter();
+        Status status = route.HowIsBetter();
 
         // assert
-        Assert.Equal("First is denied, Second is allowed", status);
+        Assert.Equal(Status.SecondIsAllowed, status);
     }
 
     [Fact]
@@ -137,10 +141,10 @@ public class Test1
         var route = new Route(ship1, ship2, pathes);
 
         // act
-        string status = route.HowIsBetter();
+        Status status = route.HowIsBetter();
 
         // assert
-        Assert.Equal("First is denied, Second is allowed", status);
+        Assert.Equal(Status.SecondIsAllowed, status);
     }
 
     [Fact]
@@ -163,10 +167,11 @@ public class Test1
         var route = new Route(ship1, pathes);
 
         // act
-        string status = route.IsRoutePassed();
+        Status status = route.IsRoutePassed();
         string shipStatus = ship1.Status;
 
         // assert
-        Assert.Equal("Deflector HP: 10, Shell HP: 25 Successful! Summary fuel: 2750, time: 110", shipStatus + " " + status);
+        Assert.Equal("Deflector HP: 10, Shell HP: 25", shipStatus);
+        Assert.Equal(Status.Successful, status);
     }
 }

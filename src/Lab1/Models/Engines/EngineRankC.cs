@@ -3,15 +3,11 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Engines;
 
 public class EngineRankC : BaseEngine
 {
+    private const double FuelRateValue = 1.5;
     public EngineRankC()
     {
-        FuelRate = 1.5;
+        FuelRate = FuelRateValue;
         FuelСost = ActivePlasmaCost;
-    }
-
-    public override void Run()
-    {
-        IsRunning = true;
     }
 
     public override double? Move(double distance)

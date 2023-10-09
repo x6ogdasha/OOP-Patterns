@@ -4,9 +4,10 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Shells;
 
 public class ShellRank2 : BaseShell
 {
+    private const double HealthPointsValue = 25;
     public ShellRank2()
     {
-        HealthPoints = 25;
+        HealthPoints = HealthPointsValue;
         IsActive = true;
     }
 }

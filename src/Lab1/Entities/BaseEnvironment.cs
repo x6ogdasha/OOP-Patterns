@@ -8,7 +8,6 @@ public abstract class BaseEnvironment
    public int SecondObstacleNumber { get; protected set; }
    public bool HasFirstObstacle { get; protected set; }
    public bool HasSecondObstacle { get; protected set; }
-   public virtual string Status => $"{GetType().Name} {GetHashCode()}:";
 
    public virtual bool IsEngineAllowed(BaseEngine engine)
    {

@@ -3,9 +3,10 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Engines;
 
 public class EngineAlpha : BaseEngine
 {
+    private const double FuelRateValue = 100;
     public EngineAlpha()
     {
-        FuelRate = 100;
+        FuelRate = FuelRateValue;
         FuelСost = GravitationalMatterCost;
     }
 

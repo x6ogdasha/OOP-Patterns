@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Helpers;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Services;
 
@@ -11,8 +12,8 @@ public class Route
     private double _firstSummaryFuel;
     private double? _firstSummaryTime;
     private double _secondSummaryFuel;
-    private string _firstStatus;
-    private string _secondStatus;
+    private Status _firstStatus;
+    private Status _secondStatus;
 
     public Route(BaseShip ship, IList<Path> route)
     {
@@ -20,8 +21,8 @@ public class Route
         _firstShip = ship;
         _firstSummaryFuel = 0;
         _firstSummaryTime = 0;
-        _firstStatus = "null";
-        _secondStatus = "null";
+        _firstStatus = Status.Null;
+        _secondStatus = Status.Null;
     }
 
     public Route(BaseShip firstShip, BaseShip secondShip, IList<Path> route)
@@ -32,11 +33,11 @@ public class Route
         _firstSummaryFuel = 0;
         _secondSummaryFuel = 0;
         _firstSummaryTime = 0;
-        _firstStatus = "null";
-        _secondStatus = "null";
+        _firstStatus = Status.Null;
+        _secondStatus = Status.Null;
     }
 
-    public string IsRoutePassed()
+    public Status IsRoutePassed()
     {
         foreach (Path path in _route)
         {
@@ -45,33 +46,33 @@ public class Route
             {
                 _firstSummaryFuel += path.FuelOnPath;
                 _firstSummaryTime += path.TimeOnPath;
-                _firstStatus = $"Successful! Summary fuel: {_firstSummaryFuel}, time: {_firstSummaryTime}";
+                _firstStatus = Status.Successful;
             }
             else if (path.CrewIsDead)
             {
-                _firstStatus = "Fail! Crew is dead";
+                _firstStatus = Status.CrewIsDead;
                 break;
             }
             else if (path.ShipIsBroken)
             {
-                _firstStatus = "Fail! Ship is broken";
+                _firstStatus = Status.ShipIsBroken;
                 break;
             }
             else if (path.ShipIsEscaped)
             {
-                _firstStatus = "Fail! Ship is escaped";
+                _firstStatus = Status.ShipIsEscaped;
                 break;
             }
             else if (path.IsShipDenied)
             {
-                _firstStatus = "Fail! Engine is denied";
+                _firstStatus = Status.EngineIsDenied;
             }
         }
 
         return _firstStatus;
     }
 
-    public string HowIsBetter()
+    public Status HowIsBetter()
     {
         foreach (Path path in _route)
         {
@@ -82,11 +83,11 @@ public class Route
             }
             else
             {
-                _firstStatus = "First is denied, Second is allowed";
+                _firstStatus = Status.SecondIsAllowed;
                 return _firstStatus;
             }
 
-            if (_secondShip != null)
+            if (_secondShip is not null)
             {
                 path.IsPassed(_secondShip);
             }
@@ -97,18 +98,18 @@ public class Route
             }
             else
             {
-                _secondStatus = "Second is denied, First is allowed";
+                _secondStatus = Status.FirstIsAllowed;
                 return _secondStatus;
             }
         }
 
         if (_firstSummaryFuel < _secondSummaryFuel)
         {
-            return $"First is better";
+            return Status.FirstIsBetter;
         }
         else
         {
-            return $"Second is better";
+            return Status.SecondIsBetter;
         }
     }
 }

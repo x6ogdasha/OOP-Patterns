@@ -1,5 +1,5 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Helpers.Exceptions;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Obstacles;
 
@@ -15,8 +15,8 @@ public class Space : BaseEnvironment
 
     public override void AddObstacle(BaseObstacle obstacle, int obstacleNumber)
     {
-        if (obstacle == null) throw new ArgumentNullException(nameof(obstacle));
-        if (obstacle.GetType() == typeof(Asteroid) || obstacle.GetType() == typeof(Meteorit))
+        if (obstacle is null) throw new ObstacleNullException();
+        if (obstacle is Asteroid || obstacle is Meteorit)
         {
             FirstObstacle = obstacle;
             FirstObstacleNumber = obstacleNumber;
@@ -27,10 +27,10 @@ public class Space : BaseEnvironment
 
     public override void AddObstacle(BaseObstacle firstObstacle, int firstObstacleNumber, BaseObstacle secondObstacle, int secondObstacleNumber)
     {
-        if (firstObstacle == null) throw new ArgumentNullException(nameof(firstObstacle));
-        if (secondObstacle == null) throw new ArgumentNullException(nameof(secondObstacle));
-        if ((firstObstacle.GetType() == typeof(Asteroid) && secondObstacleNumber.GetType() == typeof(Meteorit)) ||
-            (firstObstacle.GetType() == typeof(Meteorit) && secondObstacle.GetType() == typeof(Asteroid)))
+        if (firstObstacle is null) throw new ObstacleNullException();
+        if (secondObstacle is null) throw new ObstacleNullException();
+        if ((firstObstacle is Asteroid && secondObstacle is Meteorit) ||
+            (firstObstacle is Meteorit && secondObstacle is Asteroid))
         {
             FirstObstacle = firstObstacle;
             SecondObstacle = secondObstacle;
@@ -43,7 +43,7 @@ public class Space : BaseEnvironment
 
     public override bool IsEngineAllowed(BaseEngine engine)
     {
-        if (engine == null) throw new ArgumentNullException(nameof(engine));
-        return (engine.GetType() == typeof(EngineRankE)) || (engine.GetType() == typeof(EngineRankC));
+        if (engine is null) throw new EngineNullException();
+        return engine is EngineRankE || engine is EngineRankC;
     }
 }

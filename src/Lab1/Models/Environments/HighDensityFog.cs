@@ -1,5 +1,5 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Helpers.Exceptions;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Obstacles;
 
@@ -15,8 +15,8 @@ public class HighDensityFog : BaseEnvironment
 
     public override void AddObstacle(BaseObstacle obstacle, int obstacleNumber)
     {
-        if (obstacle == null) throw new ArgumentNullException(nameof(obstacle));
-        if (obstacle.GetType() == typeof(AntiMatterFlare))
+        if (obstacle is null) throw new ObstacleNullException();
+        if (obstacle is AntiMatterFlare)
         {
             FirstObstacle = obstacle;
             FirstObstacleNumber = obstacleNumber;
@@ -26,13 +26,13 @@ public class HighDensityFog : BaseEnvironment
         }
         else
         {
-            throw new FormatException("Can't add Obstacle");
+            throw new ObstacleWrongTypeException();
         }
     }
 
     public override bool IsEngineAllowed(BaseEngine engine)
     {
-        if (engine == null) throw new ArgumentNullException(nameof(engine));
-        return engine.GetType() == typeof(EngineAlpha) || engine.GetType() == typeof(EngineGamma) || engine.GetType() == typeof(EngineOmega);
+        if (engine is null) throw new EngineNullException();
+        return engine is EngineAlpha || engine is EngineGamma || engine is EngineOmega;
     }
 }

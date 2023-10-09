@@ -1,5 +1,6 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Helpers;
+using Itmo.ObjectOrientedProgramming.Lab1.Helpers.Exceptions;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Deflectors;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Engines;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Obstacles;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Shells;
@@ -10,23 +11,23 @@ public abstract class BaseShip
 {
     public BaseEngine MainEngine { get; protected set; } = new EngineRankC();
     public BaseEngine AdditionalEngine { get; protected set; } = new EngineRankC();
-    public BaseDeflector? Deflector { get; protected set; }
+    public BaseDeflector Deflector { get; protected set; } = new DeflectorRank1();
     public ShipSize Size { get; protected set; }
     public BaseShell Shell { get; protected set; } = new ShellRank1();
-    public bool? IsShipIntact { get; protected set; }
-    public bool? IsCrewAlive { get; protected set; }
-    public bool? AntiNitrineRadiant { get; protected set; }
-    public string Status => $"Deflector HP: {Deflector?.HealthPoints}, Shell HP: {Shell.HealthPoints}";
+    public bool IsBroken { get; protected set; }
+    public bool IsCrewDead { get; protected set; }
+    public bool AntiNitrineRadiant { get; protected set; }
+    public string Status => $"Deflector HP: {Deflector.HealthPoints}, Shell HP: {Shell.HealthPoints}";
 
     public void TakeDamage(BaseObstacle obstacle, int numberOfObstacles)
     {
-        if (obstacle == null) throw new ArgumentNullException(nameof(obstacle));
-        if (AntiNitrineRadiant == true && obstacle.GetType() == typeof(SpaceWhale))
+        if (obstacle is null) throw new ObstacleNullException();
+        if (AntiNitrineRadiant && obstacle is SpaceWhale)
         {
             return;
         }
 
-        if (Deflector?.IsActive == true)
+        if (Deflector.IsActive)
         {
             Deflector.TakeDamage(obstacle, numberOfObstacles);
             if (Deflector.RemainingDamage != 0)
@@ -39,20 +40,20 @@ public abstract class BaseShip
             Shell.TakeDamage(obstacle, numberOfObstacles);
         }
 
-        if (Shell.IsActive == false)
+        if (!Shell.IsActive)
         {
-            IsShipIntact = false;
+            IsBroken = true;
         }
 
-        if (Deflector?.KillCrew == true)
+        if (Deflector.KillCrew)
         {
-            IsCrewAlive = false;
+            IsCrewDead = true;
         }
     }
 
     public virtual double? TimeToMove(BaseEngine engine, double distance)
     {
-        if (engine == null) throw new ArgumentNullException(nameof(engine));
+        if (engine is null) throw new EngineNullException();
         return engine.Move(distance);
     }
 }

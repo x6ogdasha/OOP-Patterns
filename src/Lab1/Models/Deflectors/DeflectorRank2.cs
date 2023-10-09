@@ -1,5 +1,6 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities;
+using Itmo.ObjectOrientedProgramming.Lab1.Helpers.Exceptions;
 using Itmo.ObjectOrientedProgramming.Lab1.Models.Obstacles;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Deflectors;
@@ -7,21 +8,22 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Models.Deflectors;
 public class DeflectorRank2 : BaseDeflector
 {
     private const double MaxDamageDifference = 10;
+    private const double HealthPointsValue = 50;
     public DeflectorRank2()
     {
-        HealthPoints = 50;
+        HealthPoints = HealthPointsValue;
         IsActive = true;
     }
 
     public override void TakeDamage(BaseObstacle? obstacle, int numberOfObstacles)
     {
-        if (obstacle != null)
+        if (obstacle is not null)
         {
             HealthPoints -= obstacle.Damage * numberOfObstacles;
         }
         else
         {
-            throw new ArgumentNullException(nameof(obstacle));
+            throw new ObstacleNullException();
         }
 
         if (HealthPoints <= 0)
@@ -34,7 +36,7 @@ public class DeflectorRank2 : BaseDeflector
             }
         }
 
-        if (obstacle.GetType() == typeof(AntiMatterFlare) && PhotonDeflector == false)
+        if (obstacle is AntiMatterFlare && !PhotonDeflector)
         {
             IsActive = false;
             KillCrew = true;

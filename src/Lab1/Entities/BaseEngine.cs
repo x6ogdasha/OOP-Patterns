@@ -7,15 +7,5 @@ public abstract class BaseEngine
     public bool IsRunning { get; protected set; }
     public double FuelRate { get; protected set; }
     public double FuelСost { get; protected set; }
-    public string Status => $"{GetType()} {GetHashCode()}: {(IsRunning ? "Working. " : "Not working. ")} ";
-
-    public virtual void Run()
-    {
-        IsRunning = true;
-    }
-
-    public virtual double? Move(double distance)
-    {
-        return null;
-    }
+    public abstract double? Move(double distance);
 }
