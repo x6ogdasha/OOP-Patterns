@@ -9,10 +9,7 @@ public abstract class BaseEnvironment
    public bool HasFirstObstacle { get; protected set; }
    public bool HasSecondObstacle { get; protected set; }
 
-   public virtual bool IsEngineAllowed(BaseEngine engine)
-   {
-      return true;
-   }
+   public abstract bool IsEngineAllowed(BaseEngine engine);
 
    public virtual void AddObstacle(BaseObstacle obstacle, int obstacleNumber)
    {

@@ -28,18 +28,13 @@ public class Path
       BaseEngine? allowedEngine = GetAllowedEngine(ship);
       if (allowedEngine is not null)
       {
-         if (!SuccessfulHandleObstacle(ship, _environment.FirstObstacle, _environment.FirstObstacleNumber) ||
-             !SuccessfulHandleObstacle(ship, _environment.SecondObstacle, _environment.SecondObstacleNumber))
-         {
+         if (!SuccessfulHandleObstacle(ship, _environment.FirstObstacle, _environment.FirstObstacleNumber) || !SuccessfulHandleObstacle(ship, _environment.SecondObstacle, _environment.SecondObstacleNumber))
             return false;
-         }
 
          TimeOnPath = ship.TimeToMove(allowedEngine, _distance);
 
          if (!SuccessfulHandlePath(TimeOnPath, allowedEngine))
-         {
             return false;
-         }
       }
       else
       {
@@ -54,13 +49,9 @@ public class Path
    {
       BaseEngine? allowedEngine = null;
       if (_environment.IsEngineAllowed(ship.MainEngine))
-      {
          allowedEngine = ship.MainEngine;
-      }
       else if (_environment.IsEngineAllowed(ship.AdditionalEngine))
-      {
          allowedEngine = ship.AdditionalEngine;
-      }
 
       return allowedEngine;
    }

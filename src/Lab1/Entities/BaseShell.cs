@@ -6,8 +6,6 @@ public abstract class BaseShell : Protection
     {
         HealthPoints -= damage;
         if (HealthPoints <= 0)
-        {
             IsActive = false;
-        }
     }
 }

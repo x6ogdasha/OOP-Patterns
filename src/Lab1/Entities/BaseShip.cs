@@ -22,10 +22,7 @@ public abstract class BaseShip
     public void TakeDamage(BaseObstacle obstacle, int numberOfObstacles)
     {
         if (obstacle is null) throw new ObstacleNullException();
-        if (AntiNitrineRadiant && obstacle is SpaceWhale)
-        {
-            return;
-        }
+        if (AntiNitrineRadiant && obstacle is SpaceWhale) return;
 
         if (Deflector.IsActive)
         {
@@ -41,14 +38,10 @@ public abstract class BaseShip
         }
 
         if (!Shell.IsActive)
-        {
             IsBroken = true;
-        }
 
         if (Deflector.KillCrew)
-        {
             IsCrewDead = true;
-        }
     }
 
     public virtual double? TimeToMove(BaseEngine engine, double distance)

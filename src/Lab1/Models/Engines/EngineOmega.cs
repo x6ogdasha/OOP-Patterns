@@ -13,12 +13,8 @@ public class EngineOmega : BaseEngine
     public override double? Move(double distance)
     {
         if (distance <= FuelRate)
-        {
             return distance / FuelRate;
-        }
         else
-        {
             return null;
-        }
     }
 }

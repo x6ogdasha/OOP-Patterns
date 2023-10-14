@@ -29,8 +29,7 @@ public class Space : BaseEnvironment
     {
         if (firstObstacle is null) throw new ObstacleNullException();
         if (secondObstacle is null) throw new ObstacleNullException();
-        if ((firstObstacle is Asteroid && secondObstacle is Meteorit) ||
-            (firstObstacle is Meteorit && secondObstacle is Asteroid))
+        if (firstObstacle is Asteroid or Meteorit && secondObstacle is Meteorit or Asteroid)
         {
             FirstObstacle = firstObstacle;
             SecondObstacle = secondObstacle;

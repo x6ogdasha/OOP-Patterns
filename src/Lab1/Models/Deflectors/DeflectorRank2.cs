@@ -18,22 +18,16 @@ public class DeflectorRank2 : BaseDeflector
     public override void TakeDamage(BaseObstacle? obstacle, int numberOfObstacles)
     {
         if (obstacle is not null)
-        {
             HealthPoints -= obstacle.Damage * numberOfObstacles;
-        }
         else
-        {
             throw new ObstacleNullException();
-        }
 
         if (HealthPoints <= 0)
         {
             IsActive = false;
             PhotonDeflector = false;
             if (Math.Abs(HealthPoints) > MaxDamageDifference)
-            {
                 RemainingDamage = Math.Abs(HealthPoints);
-            }
         }
 
         if (obstacle is AntiMatterFlare && !PhotonDeflector)

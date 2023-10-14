@@ -104,12 +104,8 @@ public class Route
         }
 
         if (_firstSummaryFuel < _secondSummaryFuel)
-        {
             return Status.FirstIsBetter;
-        }
         else
-        {
             return Status.SecondIsBetter;
-        }
     }
 }
