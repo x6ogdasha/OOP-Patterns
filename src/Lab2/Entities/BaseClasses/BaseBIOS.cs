@@ -5,14 +5,20 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
 public class BaseBIOS
 {
-    private readonly List<string> _supportedCPUsList;
-
     public BaseBIOS()
     {
-        _supportedCPUsList = new List<string>();
+        SupportedCPUs = new List<string>();
+        Version = "null";
+    }
+
+    public BaseBIOS(BIOSType type, string version, IReadOnlyList<string> supportedCPUs)
+    {
+        Type = type;
+        Version = version;
+        SupportedCPUs = supportedCPUs;
     }
 
     public BIOSType Type { get; protected set; }
-    public string? Version { get; protected set; }
-    public IReadOnlyList<string> SupportedCPUs => _supportedCPUsList;
+    public string Version { get; protected set; }
+    public IReadOnlyList<string> SupportedCPUs { get; set; }
 }

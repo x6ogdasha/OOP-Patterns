@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.Interfaces;
@@ -9,7 +10,7 @@ public sealed class BuilderCPU : IBuilderCPU
     private string _socketName;
     private int _coreNumber;
     private int _coreFrequency;
-    private bool _internalGPU;
+    private bool? _internalGPU;
     private IReadOnlyList<string> _allowedList;
     private int _tdp;
     private int _power;
@@ -18,6 +19,18 @@ public sealed class BuilderCPU : IBuilderCPU
     {
         _socketName = "null";
         _allowedList = new List<string>();
+    }
+
+    public BuilderCPU(BaseCPU cpu)
+    {
+        if (cpu is null) throw new ArgumentNullException(nameof(cpu));
+        _socketName = cpu.SocketName;
+        _coreNumber = cpu.CoreNumber;
+        _coreFrequency = cpu.CoreFrequency;
+        _internalGPU = cpu.InternalGPU;
+        _allowedList = cpu.AllowedRAMFrequency;
+        _tdp = cpu.TDP;
+        _power = cpu.Power;
     }
 
     public void Socket(string socket)

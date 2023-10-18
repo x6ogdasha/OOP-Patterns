@@ -18,11 +18,12 @@ public class BaseCPU
     public BaseCPU()
     {
        AllowedRAMFrequency = new List<string>();
+       SocketName = "null";
     }
 
     public int CoreFrequency { get; set; }
     public int CoreNumber { get; set; }
-    public string? SocketName { get; set; }
+    public string SocketName { get; set; }
     public IReadOnlyList<string> AllowedRAMFrequency { get; set; }
     public bool? InternalGPU { get; set; }
     public int TDP { get; set; }

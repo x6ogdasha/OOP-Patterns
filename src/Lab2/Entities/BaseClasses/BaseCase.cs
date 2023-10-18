@@ -1,14 +1,23 @@
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab2.Common;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
 public class BaseCase
 {
-    private readonly List<string> _supportedMotherBoardFormFactor;
-
     public BaseCase()
     {
-        _supportedMotherBoardFormFactor = new List<string>();
+        SupportedMotherBoardFormFactor = new List<MotherBoardFormFactorType>();
+    }
+
+    public BaseCase(int maxGpuLength, int maxGpuWidth, int length, int height, int width, IReadOnlyList<MotherBoardFormFactorType> supportedMotherBoards)
+    {
+        MaxVideoCardLength = maxGpuLength;
+        MaxVideoCardWidth = maxGpuWidth;
+        Length = length;
+        Width = width;
+        Height = height;
+        SupportedMotherBoardFormFactor = supportedMotherBoards;
     }
 
     public int MaxVideoCardLength { get; protected set; }
@@ -16,5 +25,5 @@ public class BaseCase
     public int Length { get; protected set; }
     public int Height { get; protected set; }
     public int Width { get; protected set; }
-    public IReadOnlyList<string> SupportedMotherBoardFormFactor => _supportedMotherBoardFormFactor;
+    public IReadOnlyList<MotherBoardFormFactorType> SupportedMotherBoardFormFactor { get; set; }
 }
