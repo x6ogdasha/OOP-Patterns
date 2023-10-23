@@ -3,10 +3,11 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class MotherBoard : Prototype
+public class MotherBoard : BaseComponent, IPrototype
 {
-    public MotherBoard(string socket, int numberOfPcie, int numberOfSata, string chipset, int standardOfDdr, int ramSlots, MotherBoardFormFactorType motherBoardFormFactor, BIOS bios)
+    public MotherBoard(string name, string socket, int numberOfPcie, int numberOfSata, string chipset, int standardOfDdr, int ramSlots, MotherBoardFormFactorType motherBoardFormFactor, BIOS bios)
     {
+        Name = name;
         Socket = socket;
         NumberOfSATA = numberOfSata;
         NumberOfPCIE = numberOfPcie;
@@ -25,38 +26,38 @@ public class MotherBoard : Prototype
     public int RAMSlots { get; protected set; }
     public MotherBoardFormFactorType MotherBoardFormFactor { get; protected set; }
     public BIOS BIOS { get; protected set; } = new BIOS();
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new MotherBoard(Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, BIOS);
+        return new MotherBoard(Name, Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, BIOS);
     }
 
-    public Prototype CloneWithNewSocket(string newSocket)
+    public IPrototype CloneWithNewSocket(string newSocket, string newName)
     {
-        return new MotherBoard(newSocket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, BIOS);
+        return new MotherBoard(newName, newSocket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, BIOS);
     }
 
-    public Prototype CloneWithNewConnectionSlots(int newSataNumber, int newPcieNumber)
+    public IPrototype CloneWithNewConnectionSlots(int newSataNumber, int newPcieNumber, string newName)
     {
-        return new MotherBoard(Socket, newPcieNumber, newSataNumber, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, BIOS);
+        return new MotherBoard(newName, Socket, newPcieNumber, newSataNumber, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, BIOS);
     }
 
-    public Prototype CloneWithNewRam(int newRamStandard, int newRamSlots)
+    public IPrototype CloneWithNewRam(int newRamStandard, int newRamSlots, string newName)
     {
-        return new MotherBoard(Socket, NumberOfPCIE, NumberOfSATA, Chipset, newRamStandard, newRamSlots, MotherBoardFormFactor, BIOS);
+        return new MotherBoard(newName, Socket, NumberOfPCIE, NumberOfSATA, Chipset, newRamStandard, newRamSlots, MotherBoardFormFactor, BIOS);
     }
 
-    public Prototype CloneWithNewChipset(string chipset)
+    public IPrototype CloneWithNewChipset(string chipset, string newName)
     {
-        return new MotherBoard(Socket, NumberOfPCIE, NumberOfSATA, chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, BIOS);
+        return new MotherBoard(newName, Socket, NumberOfPCIE, NumberOfSATA, chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, BIOS);
     }
 
-    public Prototype CloneWithNewFormFactor(MotherBoardFormFactorType newType)
+    public IPrototype CloneWithNewFormFactor(MotherBoardFormFactorType newType, string newName)
     {
-        return new MotherBoard(Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, newType, BIOS);
+        return new MotherBoard(newName, Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, newType, BIOS);
     }
 
-    public Prototype CloneWithNewBios(BIOS newBios)
+    public IPrototype CloneWithNewBios(BIOS newBios, string newName)
     {
-        return new MotherBoard(Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, newBios);
+        return new MotherBoard(newName, Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, newBios);
     }
 }

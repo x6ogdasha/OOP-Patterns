@@ -2,10 +2,11 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class HDD : Prototype
+public class HDD : BaseComponent, IPrototype
 {
-    public HDD(int memoryCapacity, int rotationSpeed, int power)
+    public HDD(string name, int memoryCapacity, int rotationSpeed, int power)
     {
+        Name = name;
         MemoryCapacity = memoryCapacity;
         RotationSpeed = rotationSpeed;
         Power = power;
@@ -14,23 +15,23 @@ public class HDD : Prototype
     public int MemoryCapacity { get; protected set; }
     public int RotationSpeed { get; protected set; }
     public int Power { get; protected set; }
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new HDD(MemoryCapacity, RotationSpeed, Power);
+        return new HDD(Name, MemoryCapacity, RotationSpeed, Power);
     }
 
-    public Prototype CloneWithNewCapacity(int newCapacity)
+    public IPrototype CloneWithNewCapacity(int newCapacity, string newName)
     {
-        return new HDD(newCapacity, RotationSpeed, Power);
+        return new HDD(newName, newCapacity, RotationSpeed, Power);
     }
 
-    public Prototype CloneWithNewRotationSpeed(int newSpeed)
+    public IPrototype CloneWithNewRotationSpeed(int newSpeed, string newName)
     {
-        return new HDD(MemoryCapacity, newSpeed, Power);
+        return new HDD(newName, MemoryCapacity, newSpeed, Power);
     }
 
-    public Prototype CloneWithNewPower(int newPower)
+    public IPrototype CloneWithNewPower(int newPower, string newName)
     {
-        return new HDD(MemoryCapacity, RotationSpeed, newPower);
+        return new HDD(newName, MemoryCapacity, RotationSpeed, newPower);
     }
 }

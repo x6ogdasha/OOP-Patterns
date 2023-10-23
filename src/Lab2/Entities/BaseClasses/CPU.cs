@@ -3,10 +3,11 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class CPU : Prototype
+public class CPU : BaseComponent, IPrototype
 {
-    public CPU(string socketName, int coreNumber, int coreFrequency, bool? internalGPU, IReadOnlyList<string> supportedRamFrequencyList, int tdp, int power)
+    public CPU(string name, string socketName, int coreNumber, int coreFrequency, bool? internalGPU, IReadOnlyList<string> supportedRamFrequencyList, int tdp, int power)
     {
+        Name = name;
         SocketName = socketName;
         CoreNumber = coreNumber;
         CoreFrequency = coreFrequency;
@@ -29,28 +30,28 @@ public class CPU : Prototype
     public bool? InternalGPU { get; set; }
     public int TDP { get; set; }
     public int Power { get; set; }
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new CPU(SocketName, CoreNumber, CoreFrequency, InternalGPU, AllowedRAMFrequency, TDP, Power);
+        return new CPU(Name, SocketName, CoreNumber, CoreFrequency, InternalGPU, AllowedRAMFrequency, TDP, Power);
     }
 
-    public Prototype CloneWithNewCores(int newFrequency, int newCoreNumber)
+    public IPrototype CloneWithNewCores(int newFrequency, int newCoreNumber, string newName)
     {
-        return new CPU(SocketName, newCoreNumber, newFrequency, InternalGPU, AllowedRAMFrequency, TDP, Power);
+        return new CPU(newName, SocketName, newCoreNumber, newFrequency, InternalGPU, AllowedRAMFrequency, TDP, Power);
     }
 
-    public Prototype CloneWithNewSocket(string newSocket)
+    public IPrototype CloneWithNewSocket(string newSocket, string newName)
     {
-        return new CPU(newSocket, CoreNumber, CoreFrequency, InternalGPU, AllowedRAMFrequency, TDP, Power);
+        return new CPU(newName, newSocket, CoreNumber, CoreFrequency, InternalGPU, AllowedRAMFrequency, TDP, Power);
     }
 
-    public Prototype CloneWithNewInternalGpu(bool newInternalGpu)
+    public IPrototype CloneWithNewInternalGpu(bool newInternalGpu, string newName)
     {
-        return new CPU(SocketName, CoreNumber, CoreFrequency, newInternalGpu, AllowedRAMFrequency, TDP, Power);
+        return new CPU(newName, SocketName, CoreNumber, CoreFrequency, newInternalGpu, AllowedRAMFrequency, TDP, Power);
     }
 
-    public Prototype CloneWithNewPowerTdp(int newPower, int newTdp)
+    public IPrototype CloneWithNewPowerTdp(int newPower, int newTdp, string newName)
     {
-        return new CPU(SocketName, CoreNumber, CoreFrequency, InternalGPU, AllowedRAMFrequency, newTdp, newPower);
+        return new CPU(newName, SocketName, CoreNumber, CoreFrequency, InternalGPU, AllowedRAMFrequency, newTdp, newPower);
     }
 }

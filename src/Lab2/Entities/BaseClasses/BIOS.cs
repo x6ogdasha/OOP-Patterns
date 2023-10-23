@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class BIOS : Prototype
+public class BIOS : BaseComponent, IPrototype
 {
     public BIOS()
     {
@@ -12,8 +12,9 @@ public class BIOS : Prototype
         Version = "null";
     }
 
-    public BIOS(BIOSType type, string version, IReadOnlyList<string> supportedCPUs)
+    public BIOS(string name, BIOSType type, string version, IReadOnlyList<string> supportedCPUs)
     {
+        Name = name;
         Type = type;
         Version = version;
         SupportedCPUs = supportedCPUs;
@@ -22,18 +23,18 @@ public class BIOS : Prototype
     public BIOSType Type { get; set; }
     public string Version { get; protected set; }
     public IReadOnlyList<string> SupportedCPUs { get; set; }
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new BIOS(Type, Version, SupportedCPUs);
+        return new BIOS(Name, Type, Version, SupportedCPUs);
     }
 
-    public Prototype CloneWithNewVersion(string newVersion)
+    public IPrototype CloneWithNewVersion(string newVersion, string newName)
     {
-        return new BIOS(Type, newVersion, SupportedCPUs);
+        return new BIOS(newName, Type, newVersion, SupportedCPUs);
     }
 
-    public Prototype CloneWithNewAllowedList(IReadOnlyList<string> newList)
+    public IPrototype CloneWithNewAllowedList(IReadOnlyList<string> newList, string newName)
     {
-        return new BIOS(Type, Version, newList);
+        return new BIOS(newName, Type, Version, newList);
     }
 }

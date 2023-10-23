@@ -3,10 +3,11 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class SSD : Prototype
+public class SSD : BaseComponent, IPrototype
 {
-    public SSD(MemoryConnectionType connectionType, int memoryCapacity, int speed, int power)
+    public SSD(string name, MemoryConnectionType connectionType, int memoryCapacity, int speed, int power)
     {
+        Name = name;
         ConnectionType = connectionType;
         MemoryCapacity = memoryCapacity;
         Speed = speed;
@@ -17,23 +18,23 @@ public class SSD : Prototype
     public int MemoryCapacity { get; protected set; }
     public int Speed { get; protected set; }
     public int Power { get; protected set; }
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new SSD(ConnectionType, MemoryCapacity, Speed, Power);
+        return new SSD(Name, ConnectionType, MemoryCapacity, Speed, Power);
     }
 
-    public Prototype CloneWithNewConnectionType(MemoryConnectionType newType)
+    public IPrototype CloneWithNewConnectionType(MemoryConnectionType newType, string newName)
     {
-        return new SSD(newType, MemoryCapacity, Speed, Power);
+        return new SSD(newName, newType, MemoryCapacity, Speed, Power);
     }
 
-    public Prototype CloneWithNewCapacity(int newCapacity)
+    public IPrototype CloneWithNewCapacity(int newCapacity, string newName)
     {
-        return new SSD(ConnectionType, newCapacity, Speed, Power);
+        return new SSD(newName, ConnectionType, newCapacity, Speed, Power);
     }
 
-    public Prototype CloneWithNewSpeed(int newSpeed)
+    public IPrototype CloneWithNewSpeed(int newSpeed, string newName)
     {
-        return new SSD(ConnectionType, MemoryCapacity, newSpeed, Power);
+        return new SSD(newName, ConnectionType, MemoryCapacity, newSpeed, Power);
     }
 }

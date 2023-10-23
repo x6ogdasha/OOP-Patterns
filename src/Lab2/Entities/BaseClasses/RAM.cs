@@ -3,10 +3,11 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class RAM : Prototype
+public class RAM : BaseComponent, IPrototype
 {
-    public RAM(int memorySize, int frequency, int voltage, RAMFormFactor formFactor, int standardOfDdr, int power, XMP? profileXmp)
+    public RAM(string name, int memorySize, int frequency, int voltage, RAMFormFactor formFactor, int standardOfDdr, int power, XMP? profileXmp)
     {
+        Name = name;
         MemorySize = memorySize;
         Frequency = frequency;
         Voltage = voltage;
@@ -23,28 +24,28 @@ public class RAM : Prototype
     public int StandardOfDDR { get; protected set; }
     public int Power { get; protected set; }
     public XMP? ProfileXMP { get; protected set; }
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new RAM(MemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
+        return new RAM(Name, MemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
     }
 
-    public Prototype CloneWithNewMemorySize(int newMemorySize)
+    public IPrototype CloneWithNewMemorySize(int newMemorySize, string newName)
     {
-        return new RAM(newMemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
+        return new RAM(newName, newMemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
     }
 
-    public Prototype CloneWithNewFrequency(int newFrequency)
+    public IPrototype CloneWithNewFrequency(int newFrequency, string newName)
     {
-        return new RAM(MemorySize, newFrequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
+        return new RAM(newName, MemorySize, newFrequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
     }
 
-    public Prototype CloneWithNewStandardOfDdr(int newStandard)
+    public IPrototype CloneWithNewStandardOfDdr(int newStandard, string newName)
     {
-        return new RAM(MemorySize, Frequency, Voltage, FormFactor, newStandard, Power, ProfileXMP);
+        return new RAM(newName, MemorySize, Frequency, Voltage, FormFactor, newStandard, Power, ProfileXMP);
     }
 
-    public Prototype CloneWithNewProfileXmp(XMP? newXmp)
+    public IPrototype CloneWithNewProfileXmp(XMP? newXmp, string newName)
     {
-        return new RAM(MemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, newXmp);
+        return new RAM(newName, MemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, newXmp);
     }
 }

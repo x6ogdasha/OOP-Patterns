@@ -2,10 +2,11 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class WiFiAdapter : Prototype
+public class WiFiAdapter : BaseComponent, IPrototype
 {
-    public WiFiAdapter(string standardVersion, bool bluetoothModule, int versionOfPcie, int power)
+    public WiFiAdapter(string name, string standardVersion, bool bluetoothModule, int versionOfPcie, int power)
     {
+        Name = name;
         StandardVersion = standardVersion;
         BluetoothModule = bluetoothModule;
         VersionOfPCIE = versionOfPcie;
@@ -16,18 +17,18 @@ public class WiFiAdapter : Prototype
     public bool BluetoothModule { get; protected set; }
     public int VersionOfPCIE { get; protected set; }
     public int Power { get; protected set; }
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new WiFiAdapter(StandardVersion, BluetoothModule, VersionOfPCIE, Power);
+        return new WiFiAdapter(Name, StandardVersion, BluetoothModule, VersionOfPCIE, Power);
     }
 
-    public Prototype CloneWithNewStandard(string standard)
+    public IPrototype CloneWithNewStandard(string standard, string newName)
     {
-        return new WiFiAdapter(standard, BluetoothModule, VersionOfPCIE, Power);
+        return new WiFiAdapter(newName, standard, BluetoothModule, VersionOfPCIE, Power);
     }
 
-    public Prototype CloneWithNewBluetoothModule(bool module)
+    public IPrototype CloneWithNewBluetoothModule(bool module, string newName)
     {
-        return new WiFiAdapter(StandardVersion, module, VersionOfPCIE, Power);
+        return new WiFiAdapter(newName, StandardVersion, module, VersionOfPCIE, Power);
     }
 }

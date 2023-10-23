@@ -2,10 +2,11 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class GPU : Prototype
+public class GPU : BaseComponent, IPrototype
 {
-    public GPU(int height, int width, int versionOfPcie, int videoMemory, int chipFrequency, int power)
+    public GPU(string name, int height, int width, int versionOfPcie, int videoMemory, int chipFrequency, int power)
     {
+        Name = name;
         Height = height;
         Width = width;
         VersionOfPCIE = versionOfPcie;
@@ -20,18 +21,18 @@ public class GPU : Prototype
     public int VideoMemory { get; protected set; }
     public int ChipFrequency { get; protected set; }
     public int Power { get; protected set; }
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new GPU(Height, Width, VersionOfPCIE, VideoMemory, ChipFrequency, Power);
+        return new GPU(Name, Height, Width, VersionOfPCIE, VideoMemory, ChipFrequency, Power);
     }
 
-    public Prototype CloneWithNewSize(int height, int width)
+    public IPrototype CloneWithNewSize(int height, int width, string newName)
     {
-        return new GPU(height, width, VersionOfPCIE, VideoMemory, ChipFrequency, Power);
+        return new GPU(newName, height, width, VersionOfPCIE, VideoMemory, ChipFrequency, Power);
     }
 
-    public Prototype CloneWithNewVideoMemory(int newMemory)
+    public IPrototype CloneWithNewVideoMemory(int newMemory, string newName)
     {
-        return new GPU(Height, Width, VersionOfPCIE, newMemory, ChipFrequency, Power);
+        return new GPU(newName, Height, Width, VersionOfPCIE, newMemory, ChipFrequency, Power);
     }
 }

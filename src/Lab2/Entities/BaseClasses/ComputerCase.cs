@@ -4,15 +4,16 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class ComputerCase : Prototype
+public class ComputerCase : BaseComponent, IPrototype
 {
     public ComputerCase()
     {
         SupportedMotherBoardFormFactor = new List<MotherBoardFormFactorType>();
     }
 
-    public ComputerCase(int maxGpuLength, int maxGpuWidth, int length, int height, int width, IReadOnlyList<MotherBoardFormFactorType> supportedMotherBoards)
+    public ComputerCase(string name, int maxGpuLength, int maxGpuWidth, int length, int height, int width, IReadOnlyList<MotherBoardFormFactorType> supportedMotherBoards)
     {
+        Name = name;
         MaxGPULength = maxGpuLength;
         MaxGPUWidth = maxGpuWidth;
         Length = length;
@@ -27,23 +28,23 @@ public class ComputerCase : Prototype
     public int Height { get; protected set; }
     public int Width { get; protected set; }
     public IReadOnlyList<MotherBoardFormFactorType> SupportedMotherBoardFormFactor { get; set; }
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new ComputerCase(MaxGPULength, MaxGPUWidth, Length, Height, Width, SupportedMotherBoardFormFactor);
+        return new ComputerCase(Name, MaxGPULength, MaxGPUWidth, Length, Height, Width, SupportedMotherBoardFormFactor);
     }
 
-    public Prototype CloneWithNewMaxGpuSize(int gpuLength, int gpuWidth)
+    public IPrototype CloneWithNewMaxGpuSize(int gpuLength, int gpuWidth, string newName)
     {
-        return new ComputerCase(gpuLength, gpuWidth, Length, Height, Width, SupportedMotherBoardFormFactor);
+        return new ComputerCase(newName, gpuLength, gpuWidth, Length, Height, Width, SupportedMotherBoardFormFactor);
     }
 
-    public Prototype CloneWithNewSize(int newLength, int newHeight, int newWidth)
+    public IPrototype CloneWithNewSize(int newLength, int newHeight, int newWidth, string newName)
     {
-        return new ComputerCase(MaxGPULength, MaxGPUWidth, newLength, newHeight, newWidth, SupportedMotherBoardFormFactor);
+        return new ComputerCase(newName, MaxGPULength, MaxGPUWidth, newLength, newHeight, newWidth, SupportedMotherBoardFormFactor);
     }
 
-    public Prototype CloneWithNewSupportedFormFactors(IReadOnlyList<MotherBoardFormFactorType> newSupportedList)
+    public IPrototype CloneWithNewSupportedFormFactors(IReadOnlyList<MotherBoardFormFactorType> newSupportedList, string newName)
     {
-        return new ComputerCase(MaxGPULength, MaxGPUWidth, Length, Height, Width, newSupportedList);
+        return new ComputerCase(newName, MaxGPULength, MaxGPUWidth, Length, Height, Width, newSupportedList);
     }
 }

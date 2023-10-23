@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
-public abstract class Prototype
+public interface IPrototype
 {
-    public abstract Prototype Clone();
+    public abstract IPrototype Clone();
 }

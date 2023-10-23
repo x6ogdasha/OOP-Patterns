@@ -3,15 +3,16 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class CoolingSystem : Prototype
+public class CoolingSystem : BaseComponent, IPrototype
 {
     public CoolingSystem()
     {
         SupportedSockets = new List<string>();
     }
 
-    public CoolingSystem(int length, int width, int height, IReadOnlyList<string> supportedSockets, int tdp)
+    public CoolingSystem(string name, int length, int width, int height, IReadOnlyList<string> supportedSockets, int tdp)
     {
+        Name = name;
         Length = length;
         Width = width;
         Height = height;
@@ -24,23 +25,23 @@ public class CoolingSystem : Prototype
     public int Height { get; protected set; }
     public IReadOnlyList<string> SupportedSockets { get; set; }
     public int TDP { get; protected set; }
-    public override Prototype Clone()
+    public IPrototype Clone()
     {
-        return new CoolingSystem(Length, Width, Height, SupportedSockets, TDP);
+        return new CoolingSystem(Name, Length, Width, Height, SupportedSockets, TDP);
     }
 
-    public Prototype CloneWithNewSize(int newLength, int newWidth, int newHeight)
+    public IPrototype CloneWithNewSize(int newLength, int newWidth, int newHeight, string newName)
     {
-        return new CoolingSystem(newLength, newWidth, newHeight, SupportedSockets, TDP);
+        return new CoolingSystem(newName, newLength, newWidth, newHeight, SupportedSockets, TDP);
     }
 
-    public Prototype CloneWithNewSupportedSockets(IReadOnlyList<string> newAllowedList)
+    public IPrototype CloneWithNewSupportedSockets(IReadOnlyList<string> newAllowedList, string newName)
     {
-        return new CoolingSystem(Length, Width, Height, newAllowedList, TDP);
+        return new CoolingSystem(newName, Length, Width, Height, newAllowedList, TDP);
     }
 
-    public Prototype CloneWithNewTdp(int newTdp)
+    public IPrototype CloneWithNewTdp(int newTdp, string newName)
     {
-        return new CoolingSystem(Length, Width, Height, SupportedSockets, newTdp);
+        return new CoolingSystem(newName, Length, Width, Height, SupportedSockets, newTdp);
     }
 }
