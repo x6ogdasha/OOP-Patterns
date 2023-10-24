@@ -1,8 +1,9 @@
+using System;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class HDD : BaseComponent, IPrototype
+public class HDD : BaseComponent, IPrototype, IEquatable<HDD>
 {
     public HDD(string name, int memoryCapacity, int rotationSpeed, int power)
     {
@@ -33,5 +34,25 @@ public class HDD : BaseComponent, IPrototype
     public IPrototype CloneWithNewPower(int newPower, string newName)
     {
         return new HDD(newName, MemoryCapacity, RotationSpeed, newPower);
+    }
+
+    public bool Equals(HDD? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return MemoryCapacity == other.MemoryCapacity && RotationSpeed == other.RotationSpeed && Power == other.Power;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not HDD) return false;
+        return Equals((HDD)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(MemoryCapacity, RotationSpeed, Power);
     }
 }

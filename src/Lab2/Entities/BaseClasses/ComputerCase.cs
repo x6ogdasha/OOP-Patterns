@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab2.Common;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class ComputerCase : BaseComponent, IPrototype
+public class ComputerCase : BaseComponent, IPrototype, IEquatable<ComputerCase>
 {
     public ComputerCase()
     {
@@ -46,5 +47,25 @@ public class ComputerCase : BaseComponent, IPrototype
     public IPrototype CloneWithNewSupportedFormFactors(IReadOnlyList<MotherBoardFormFactorType> newSupportedList, string newName)
     {
         return new ComputerCase(newName, MaxGPULength, MaxGPUWidth, Length, Height, Width, newSupportedList);
+    }
+
+    public bool Equals(ComputerCase? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return MaxGPULength == other.MaxGPULength && MaxGPUWidth == other.MaxGPUWidth && Length == other.Length && Height == other.Height && Width == other.Width && SupportedMotherBoardFormFactor.Equals(other.SupportedMotherBoardFormFactor);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not ComputerCase) return false;
+        return Equals((ComputerCase)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(MaxGPULength, MaxGPUWidth, Length, Height, Width, SupportedMotherBoardFormFactor);
     }
 }

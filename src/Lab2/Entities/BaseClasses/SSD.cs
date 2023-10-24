@@ -1,9 +1,10 @@
+using System;
 using Itmo.ObjectOrientedProgramming.Lab2.Common;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class SSD : BaseComponent, IPrototype
+public class SSD : BaseComponent, IPrototype, IEquatable<SSD>
 {
     public SSD(string name, MemoryConnectionType connectionType, int memoryCapacity, int speed, int power)
     {
@@ -36,5 +37,25 @@ public class SSD : BaseComponent, IPrototype
     public IPrototype CloneWithNewSpeed(int newSpeed, string newName)
     {
         return new SSD(newName, ConnectionType, MemoryCapacity, newSpeed, Power);
+    }
+
+    public bool Equals(SSD? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return ConnectionType == other.ConnectionType && MemoryCapacity == other.MemoryCapacity && Speed == other.Speed && Power == other.Power;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not SSD) return false;
+        return Equals((SSD)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine((int)ConnectionType, MemoryCapacity, Speed, Power);
     }
 }

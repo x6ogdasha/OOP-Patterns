@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class CPU : BaseComponent, IPrototype
+public class CPU : BaseComponent, IPrototype, IEquatable<CPU>
 {
     public CPU(string name, string socketName, int coreNumber, int coreFrequency, bool? internalGPU, IReadOnlyList<string> supportedRamFrequencyList, int tdp, int power)
     {
@@ -53,5 +54,25 @@ public class CPU : BaseComponent, IPrototype
     public IPrototype CloneWithNewPowerTdp(int newPower, int newTdp, string newName)
     {
         return new CPU(newName, SocketName, CoreNumber, CoreFrequency, InternalGPU, AllowedRAMFrequency, newTdp, newPower);
+    }
+
+    public bool Equals(CPU? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return CoreFrequency == other.CoreFrequency && CoreNumber == other.CoreNumber && SocketName == other.SocketName && AllowedRAMFrequency.Equals(other.AllowedRAMFrequency) && InternalGPU == other.InternalGPU && TDP == other.TDP && Power == other.Power;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not CPU) return false;
+        return Equals((CPU)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(CoreFrequency, CoreNumber, SocketName, AllowedRAMFrequency, InternalGPU, TDP, Power);
     }
 }

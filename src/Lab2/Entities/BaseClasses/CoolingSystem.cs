@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class CoolingSystem : BaseComponent, IPrototype
+public class CoolingSystem : BaseComponent, IPrototype, IEquatable<CoolingSystem>
 {
     public CoolingSystem()
     {
@@ -43,5 +44,25 @@ public class CoolingSystem : BaseComponent, IPrototype
     public IPrototype CloneWithNewTdp(int newTdp, string newName)
     {
         return new CoolingSystem(newName, Length, Width, Height, SupportedSockets, newTdp);
+    }
+
+    public bool Equals(CoolingSystem? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Length == other.Length && Width == other.Width && Height == other.Height && SupportedSockets.Equals(other.SupportedSockets) && TDP == other.TDP;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not CoolingSystem) return false;
+        return Equals((CoolingSystem)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Length, Width, Height, SupportedSockets, TDP);
     }
 }

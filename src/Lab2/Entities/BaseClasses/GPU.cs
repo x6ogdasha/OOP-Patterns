@@ -1,8 +1,9 @@
+using System;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class GPU : BaseComponent, IPrototype
+public class GPU : BaseComponent, IPrototype, IEquatable<GPU>
 {
     public GPU(string name, int height, int width, int versionOfPcie, int videoMemory, int chipFrequency, int power)
     {
@@ -34,5 +35,25 @@ public class GPU : BaseComponent, IPrototype
     public IPrototype CloneWithNewVideoMemory(int newMemory, string newName)
     {
         return new GPU(newName, Height, Width, VersionOfPCIE, newMemory, ChipFrequency, Power);
+    }
+
+    public bool Equals(GPU? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Height == other.Height && Width == other.Width && VersionOfPCIE == other.VersionOfPCIE && VideoMemory == other.VideoMemory && ChipFrequency == other.ChipFrequency && Power == other.Power;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not GPU) return false;
+        return Equals((GPU)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Height, Width, VersionOfPCIE, VideoMemory, ChipFrequency, Power);
     }
 }

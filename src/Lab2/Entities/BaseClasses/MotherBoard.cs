@@ -1,9 +1,10 @@
+using System;
 using Itmo.ObjectOrientedProgramming.Lab2.Common;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class MotherBoard : BaseComponent, IPrototype
+public class MotherBoard : BaseComponent, IPrototype, IEquatable<MotherBoard>
 {
     public MotherBoard()
     {
@@ -66,5 +67,25 @@ public class MotherBoard : BaseComponent, IPrototype
     public IPrototype CloneWithNewBios(BIOS newBios, string newName)
     {
         return new MotherBoard(newName, Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, newBios);
+    }
+
+    public bool Equals(MotherBoard? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return Socket == other.Socket && NumberOfPCIE == other.NumberOfPCIE && NumberOfSATA == other.NumberOfSATA && Chipset == other.Chipset && StandardOfDDR == other.StandardOfDDR && RAMSlots == other.RAMSlots && MotherBoardFormFactor == other.MotherBoardFormFactor && BIOS.Equals(other.BIOS);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj is not MotherBoard) return false;
+        return Equals((MotherBoard)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, (int)MotherBoardFormFactor, BIOS);
     }
 }
