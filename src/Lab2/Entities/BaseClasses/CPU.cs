@@ -6,7 +6,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
 public class CPU : BaseComponent, IPrototype, IEquatable<CPU>
 {
-    public CPU(string name, string socketName, int coreNumber, int coreFrequency, bool? internalGPU, IReadOnlyList<string> supportedRamFrequencyList, int tdp, int power)
+    public CPU(string name, string socketName, int coreNumber, int coreFrequency, bool internalGPU, IReadOnlyList<string> supportedRamFrequencyList, int tdp, int power)
     {
         Name = name;
         SocketName = socketName;
@@ -28,7 +28,7 @@ public class CPU : BaseComponent, IPrototype, IEquatable<CPU>
     public int CoreNumber { get; set; }
     public string SocketName { get; set; }
     public IReadOnlyList<string> AllowedRAMFrequency { get; set; }
-    public bool? InternalGPU { get; set; }
+    public bool InternalGPU { get; set; }
     public int TDP { get; set; }
     public int Power { get; set; }
     public IPrototype Clone()

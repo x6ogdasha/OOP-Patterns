@@ -2,32 +2,32 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
 public class Computer
 {
-    private BIOS? _bios;
-    private ComputerCase _case;
-    private CoolingSystem _coolingSystem;
-    private CPU _cpu;
-    private GPU? _gpu;
-    private HDD? _hdd;
-    private MotherBoard _motherBoard;
-    private PowerBlock _powerBlock;
-    private RAM _ram;
-    private SSD? _ssd;
-    private WiFiAdapter? _wiFiAdapter;
-    private XMP? _xmp;
-
     public Computer(BIOS? bios, ComputerCase computerCase, CoolingSystem coolingSystem, CPU cpu, GPU? gpu, HDD? hdd, MotherBoard motherBoard, PowerBlock powerBlock, RAM ram, SSD? ssd, WiFiAdapter? wiFiAdapter, XMP? xmp)
     {
-        _bios = bios;
-        _case = computerCase;
-        _coolingSystem = coolingSystem;
-        _cpu = cpu;
-        _gpu = gpu;
-        _hdd = hdd;
-        _motherBoard = motherBoard;
-        _powerBlock = powerBlock;
-        _ram = ram;
-        _ssd = ssd;
-        _wiFiAdapter = wiFiAdapter;
-        _xmp = xmp;
+        Bios = bios;
+        ComputerCase = computerCase;
+        CoolingSystem = coolingSystem;
+        Cpu = cpu;
+        Gpu = gpu;
+        Hdd = hdd;
+        MotherBoard = motherBoard;
+        PowerBlock = powerBlock;
+        Ram = ram;
+        Ssd = ssd;
+        WiFiAdapter = wiFiAdapter;
+        Xmp = xmp;
     }
+
+    public BIOS? Bios { get; set; }
+    public ComputerCase ComputerCase { get; set; }
+    public CoolingSystem CoolingSystem { get; set; }
+    public CPU Cpu { get; set; }
+    public GPU? Gpu { get; set; }
+    public HDD? Hdd { get; set; }
+    public MotherBoard MotherBoard { get; set; }
+    public PowerBlock PowerBlock { get; set; }
+    public RAM Ram { get; set; }
+    public SSD? Ssd { get; set; }
+    public WiFiAdapter? WiFiAdapter { get; set; }
+    public XMP? Xmp { get; set; }
 }

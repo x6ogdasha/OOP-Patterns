@@ -1,8 +1,8 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.Builder;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.Repositories;
+using Itmo.ObjectOrientedProgramming.Lab2.Services;
 
-namespace Itmo.ObjectOrientedProgramming.Lab2.Services;
+namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.Builder;
 
 public class Director
 {

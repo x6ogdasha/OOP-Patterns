@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using Itmo.ObjectOrientedProgramming.Lab2.Common;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.Builder;
@@ -25,36 +28,105 @@ public class ComputerBuilder
         _motherBoard = new MotherBoard();
         _powerBlock = new PowerBlock();
         _ram = new RAM();
+        StatusOfBuilding = Status.Successful;
     }
+
+    public Status? StatusOfBuilding { get; set; }
 
     public void BIOS(BIOS? bios)
     {
-        _bios = bios;
+        if (bios is not null && bios.SupportedCPUs.Contains(_cpu.SocketName))
+        {
+            _bios = bios;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithBIOS;
+        }
     }
 
     public void ComputerCase(ComputerCase computerCase)
     {
-        _case = computerCase;
+        if (computerCase == null) throw new ArgumentNullException(nameof(computerCase));
+
+        if (_gpu is not null && _gpu.Height <= computerCase.MaxGPULength &&
+            computerCase.SupportedMotherBoardFormFactor.Contains(_motherBoard.MotherBoardFormFactor))
+        {
+            _case = computerCase;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithCase;
+        }
+
+        if (_gpu is null && computerCase.SupportedMotherBoardFormFactor.Contains(_motherBoard.MotherBoardFormFactor))
+        {
+            _case = computerCase;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithCase;
+        }
     }
 
     public void CoolingSystem(CoolingSystem coolingSystem)
     {
-        _coolingSystem = coolingSystem;
+        if (coolingSystem is null) throw new ArgumentNullException(nameof(coolingSystem));
+
+        if (coolingSystem.SupportedSockets.Contains(_motherBoard.Socket))
+        {
+            _coolingSystem = coolingSystem;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithCooler;
+            return;
+        }
+
+        if (coolingSystem.TDP < _cpu.TDP) StatusOfBuilding = Status.GuaranteeOff;
     }
 
     public void CPU(CPU cpu)
     {
-        _cpu = cpu;
+        if (cpu is null) throw new ArgumentNullException(nameof(cpu));
+
+        if (cpu.SocketName == _motherBoard.Socket && _motherBoard.BIOS.SupportedCPUs.Contains(cpu.SocketName))
+        {
+            _cpu = cpu;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithCPU;
+        }
     }
 
     public void GPU(GPU? gpu)
     {
-        _gpu = gpu;
+        if (gpu is not null && !_cpu.InternalGPU)
+        {
+            _gpu = gpu;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithGPU;
+        }
+
+        if (gpu is not null && _cpu.InternalGPU)
+        {
+            _gpu = gpu;
+        }
     }
 
     public void HDD(HDD? hdd)
     {
-        _hdd = hdd;
+        if (hdd is not null && _motherBoard.NumberOfSATA > 0)
+        {
+            _hdd = hdd;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithHDD;
+        }
     }
 
     public void MotherBoard(MotherBoard motherBoard)
@@ -64,17 +136,43 @@ public class ComputerBuilder
 
     public void PowerBlock(PowerBlock powerBlock)
     {
-        _powerBlock = powerBlock;
+        if (powerBlock == null) throw new ArgumentNullException(nameof(powerBlock));
+
+        if (_ssd is not null && _gpu is not null &&
+            _ram.Power + _gpu.Power + _ssd.Power <= powerBlock.Power)
+        {
+            _powerBlock = powerBlock;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithPowerBlock;
+        }
     }
 
     public void RAM(RAM ram)
     {
-        _ram = ram;
+        if (ram is null) throw new ArgumentNullException(nameof(ram));
+
+        if (_motherBoard.StandardOfDDR == ram.StandardOfDDR)
+        {
+            _ram = ram;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithRAM;
+        }
     }
 
     public void SSD(SSD? ssd)
     {
-        _ssd = ssd;
+        if (ssd is not null && _motherBoard.NumberOfPCIE > 0)
+        {
+            _ssd = ssd;
+        }
+        else
+        {
+            StatusOfBuilding = Status.FailWithSSD;
+        }
     }
 
     public void WiFiAdapter(WiFiAdapter? wiFiAdapter)
