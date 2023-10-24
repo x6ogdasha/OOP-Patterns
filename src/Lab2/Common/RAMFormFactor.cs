@@ -4,4 +4,5 @@ public enum RAMFormFactor
 {
     DIMM,
     SODIMM,
+    RDIMM,
 }

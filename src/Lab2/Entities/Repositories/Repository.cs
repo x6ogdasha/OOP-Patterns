@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.Repositories;
 
-public class Repo : BaseComponent, IReposiroty<BaseComponent>
+public class Repository : BaseComponent, IReposiroty<BaseComponent>
 {
     private readonly Dictionary<string, List<BaseComponent>> _repository = new();
 
@@ -14,7 +14,7 @@ public class Repo : BaseComponent, IReposiroty<BaseComponent>
         return foundItem.Value?.FirstOrDefault(c => c == component);
     }
 
-    public void Update(BaseComponent component)
+    public void Create(BaseComponent component)
     {
         KeyValuePair<string, List<BaseComponent>> foundItem = _repository.FirstOrDefault(x => x.Key == nameof(component) && x.Value.Contains(component));
         foundItem.Value?.Add(component);

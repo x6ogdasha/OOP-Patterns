@@ -10,6 +10,11 @@ public class PowerBlock : BaseComponent, IPrototype
         Power = power;
     }
 
+    public PowerBlock()
+    {
+        Name = "null";
+    }
+
     public int Power { get; protected set; }
     public IPrototype Clone()
     {

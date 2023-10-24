@@ -6,4 +6,5 @@ public enum BIOSType
     Award,
     Intel,
     UEFI,
+    Legacy,
 }

@@ -5,6 +5,13 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
 public class MotherBoard : BaseComponent, IPrototype
 {
+    public MotherBoard()
+    {
+        Name = "null";
+        Socket = "null";
+        Chipset = "null";
+    }
+
     public MotherBoard(string name, string socket, int numberOfPcie, int numberOfSata, string chipset, int standardOfDdr, int ramSlots, MotherBoardFormFactorType motherBoardFormFactor, BIOS bios)
     {
         Name = name;

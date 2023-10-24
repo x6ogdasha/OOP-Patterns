@@ -17,6 +17,11 @@ public class RAM : BaseComponent, IPrototype
         ProfileXMP = profileXmp;
     }
 
+    public RAM()
+    {
+        Name = "null";
+    }
+
     public int MemorySize { get; protected set; }
     public int Frequency { get; protected set; }
     public int Voltage { get; protected set; }
