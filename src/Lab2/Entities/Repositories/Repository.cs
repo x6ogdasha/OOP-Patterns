@@ -1,28 +1,25 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
-
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.Repositories;
 
-public class Repository : BaseComponent, IReposiroty<BaseComponent>
+public class Repository<T> : IReposiroty<T>
+    where T : IEquatable<T>
 {
-    private readonly Dictionary<string, List<BaseComponent>> _repository = new();
+    private readonly List<T> _repository = new List<T>();
 
-    public BaseComponent? Read(BaseComponent component)
+    public T? Read(string? component)
     {
-        KeyValuePair<string, List<BaseComponent>> foundItem = _repository.FirstOrDefault(x => x.Key == nameof(component) && x.Value.Contains(component));
-        return foundItem.Value?.FirstOrDefault(c => c == component);
+        return _repository.FirstOrDefault(x => x is not null && x.Equals(component));
     }
 
-    public void Create(BaseComponent component)
+    public void Create(T component)
     {
-        KeyValuePair<string, List<BaseComponent>> foundItem = _repository.FirstOrDefault(x => x.Key == nameof(component) && x.Value.Contains(component));
-        foundItem.Value?.Add(component);
+        _repository.Add(component);
     }
 
-    public void Delete(BaseComponent component)
+    public void Delete(T component)
     {
-        KeyValuePair<string, List<BaseComponent>> foundItem = _repository.FirstOrDefault(x => x.Key == nameof(component) && x.Value.Contains(component));
-        foundItem.Value?.Remove(component);
+        _repository.Remove(component);
     }
 }
