@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab2.Common;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
@@ -38,17 +39,17 @@ public class CreateComponents
             "ASUS BIOS",
             BIOSType.UEFI,
             "2.0",
-            new List<string>() { "Intel Core i9", "AMD Ryzen 7" }));
+            new List<string>() { "Intel Core i9", "AM4" }));
         Repository.BiosRepository.Create(new BIOS(
             "MSI BIOS",
             BIOSType.Legacy,
             "1.5",
-            new List<string>() { "Intel Core i7", "AMD Ryzen 5" }));
+            new List<string>() { "Intel Core i7", "AM5" }));
         Repository.BiosRepository.Create(new BIOS(
             "Gigabyte BIOS",
             BIOSType.UEFI,
             "3.1",
-            new List<string>() { "Intel Core i5", "AMD Ryzen 9" }));
+            new List<string>() { "LGA1700", "AM5" }));
     }
 
     private void CreateComputerCases()
@@ -60,7 +61,7 @@ public class CreateComponents
             450,
             200,
             200,
-            new List<MotherBoardFormFactorType> { MotherBoardFormFactorType.ATX }));
+            new List<MotherBoardFormFactorType> { MotherBoardFormFactorType.ATX, MotherBoardFormFactorType.MiniATX }));
         Repository.CaseRepository.Create(new ComputerCase(
             "Mini case",
             250,
@@ -86,14 +87,14 @@ public class CreateComponents
             160,
             120,
             75,
-            new List<string> { "LGA1200", "AM4" },
+            new List<string> { "LGA1700", "AM4" },
             95));
         Repository.CoolingRepository.Create(new CoolingSystem(
             "Liquid Cooler",
             240,
             120,
             30,
-            new List<string> { "LGA1700", "AM5" },
+            new List<string> { "LGA1700", "AM5", "AM4" },
             150));
         Repository.CoolingRepository.Create(new CoolingSystem(
             "High-Perfomance Cooler",
@@ -116,7 +117,7 @@ public class CreateComponents
             95,
             65));
         Repository.CpuRepository.Create(new CPU(
-            "IAMD Ryzen 7 5700G",
+            "AMD Ryzen 7 5700G",
             "AM4",
             8,
             3800,
@@ -169,17 +170,17 @@ public class CreateComponents
             "Seagate Barracuda 4TB",
             4_000,
             7_200,
-            8));
+            80));
         Repository.HddRepository.Create(new HDD(
             "Western Digital 1TB",
             1_000,
             5_400,
-            4));
+            40));
         Repository.HddRepository.Create(new HDD(
             "Seagate IronWolf 10TB",
             10_000,
             7_200,
-            9));
+            90));
     }
 
     private void CreateMotherBoard()
@@ -190,27 +191,27 @@ public class CreateComponents
             4,
             6,
             "X570",
-            3200,
+            4,
             4,
             MotherBoardFormFactorType.ATX,
-            new BIOS("ASUS BIOS", BIOSType.UEFI, "3.2", new List<string> { "AMD Ryzen 9", "Intel Core i9" })));
+            Repository.BiosRepository.Read("ASUS BIOS") ?? throw new InvalidOperationException()));
         Repository.MotherRepository.Create(new MotherBoard(
             "Gigabyte B550I AORUS PRO AX",
-            "AM4",
+            "LGA1700",
             1,
             4,
             "B550",
-            3600,
+            4,
             2,
             MotherBoardFormFactorType.MiniATX,
-            new BIOS("Gigabyte BIOS", BIOSType.UEFI, "2.1", new List<string> { "AMD Ryzen 5", "Intel Core i5" })));
+            Repository.BiosRepository.Read("Gigabyte BIOS") ?? throw new InvalidOperationException()));
         Repository.MotherRepository.Create(new MotherBoard(
             "ASRock Rack EPYCD8-2T",
             "SP3",
             6,
             16,
             "AND SP3",
-            2666,
+            4,
             16,
             MotherBoardFormFactorType.MiniATX,
             new BIOS("ASRock BIOS", BIOSType.Legacy, "1.5", new List<string> { "AMD EPYC" })));

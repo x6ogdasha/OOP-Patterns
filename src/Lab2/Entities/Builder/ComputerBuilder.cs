@@ -39,7 +39,7 @@ public class ComputerBuilder
         {
             _bios = bios;
         }
-        else
+        else if (bios is not null)
         {
             StatusOfBuilding = Status.FailWithBIOS;
         }
@@ -49,23 +49,18 @@ public class ComputerBuilder
     {
         if (computerCase == null) throw new ArgumentNullException(nameof(computerCase));
 
-        if (_gpu is not null && _gpu.Height <= computerCase.MaxGPULength &&
-            computerCase.SupportedMotherBoardFormFactor.Contains(_motherBoard.MotherBoardFormFactor))
+        switch (_gpu)
         {
-            _case = computerCase;
-        }
-        else
-        {
-            StatusOfBuilding = Status.FailWithCase;
-        }
+            case not null when _gpu.Height <= computerCase.MaxGPULength && computerCase.SupportedMotherBoardFormFactor.Contains(_motherBoard.MotherBoardFormFactor):
+                _case = computerCase;
+                break;
+            case null when computerCase.SupportedMotherBoardFormFactor.Contains(_motherBoard.MotherBoardFormFactor):
+                _case = computerCase;
+                break;
 
-        if (_gpu is null && computerCase.SupportedMotherBoardFormFactor.Contains(_motherBoard.MotherBoardFormFactor))
-        {
-            _case = computerCase;
-        }
-        else
-        {
-            StatusOfBuilding = Status.FailWithCase;
+            default:
+                StatusOfBuilding = Status.FailWithCase;
+                break;
         }
     }
 
@@ -76,14 +71,13 @@ public class ComputerBuilder
         if (coolingSystem.SupportedSockets.Contains(_motherBoard.Socket))
         {
             _coolingSystem = coolingSystem;
+            if (coolingSystem.TDP < _cpu.TDP) StatusOfBuilding = Status.GuaranteeOff;
         }
         else
         {
             StatusOfBuilding = Status.FailWithCooler;
             return;
         }
-
-        if (coolingSystem.TDP < _cpu.TDP) StatusOfBuilding = Status.GuaranteeOff;
     }
 
     public void CPU(CPU cpu)
@@ -102,16 +96,12 @@ public class ComputerBuilder
 
     public void GPU(GPU? gpu)
     {
-        if (gpu is not null && !_cpu.InternalGPU)
-        {
-            _gpu = gpu;
-        }
-        else
+        if (gpu is null && !_cpu.InternalGPU)
         {
             StatusOfBuilding = Status.FailWithGPU;
         }
 
-        if (gpu is not null && _cpu.InternalGPU)
+        if (gpu is not null)
         {
             _gpu = gpu;
         }
@@ -123,7 +113,7 @@ public class ComputerBuilder
         {
             _hdd = hdd;
         }
-        else
+        else if (hdd is not null)
         {
             StatusOfBuilding = Status.FailWithHDD;
         }
@@ -138,14 +128,14 @@ public class ComputerBuilder
     {
         if (powerBlock == null) throw new ArgumentNullException(nameof(powerBlock));
 
-        if (_ssd is not null && _gpu is not null &&
-            _ram.Power + _gpu.Power + _ssd.Power <= powerBlock.Power)
+        if (_cpu is not null && _gpu is not null &&
+            _cpu.Power + _gpu.Power <= powerBlock.Power)
         {
             _powerBlock = powerBlock;
         }
         else
         {
-            StatusOfBuilding = Status.FailWithPowerBlock;
+            StatusOfBuilding = Status.WarningWithPower;
         }
     }
 
@@ -169,7 +159,7 @@ public class ComputerBuilder
         {
             _ssd = ssd;
         }
-        else
+        else if (ssd is not null)
         {
             StatusOfBuilding = Status.FailWithSSD;
         }

@@ -12,6 +12,6 @@ public enum Status
     FailWithSSD,
     FailWithHDD,
     FailWithCase,
-    FailWithPowerBlock,
+    WarningWithPower,
     GuaranteeOff,
 }

@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
+
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.Repositories;
 
-public class Repository<T> : IReposiroty<T>
-    where T : IEquatable<T>
+public class Repository<T>
+    where T : BaseComponent, IEquatable<T>
 {
     private readonly List<T> _repository = new List<T>();
 
     public T? Read(string? component)
     {
-        return _repository.FirstOrDefault(x => x is not null && x.Equals(component));
+        return _repository.FirstOrDefault(x => x is not null && x.Name == component);
     }
 
     public void Create(T component)
