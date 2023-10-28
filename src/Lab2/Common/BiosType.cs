@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab2.Common;
 
-public enum BIOSType
+public enum BiosType
 {
     AMI,
     Award,

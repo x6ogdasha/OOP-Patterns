@@ -8,12 +8,11 @@ public class MotherBoard : BaseComponent, IPrototype, IEquatable<MotherBoard>
 {
     public MotherBoard()
     {
-        Name = "null";
-        Socket = "null";
-        Chipset = "null";
+        Socket = string.Empty;
+        Chipset = string.Empty;
     }
 
-    public MotherBoard(string name, string socket, int numberOfPcie, int numberOfSata, string chipset, int standardOfDdr, int ramSlots, MotherBoardFormFactorType motherBoardFormFactor, BIOS bios)
+    public MotherBoard(string name, string socket, int numberOfPcie, int numberOfSata, string chipset, int standardOfDdr, int ramSlots, MotherBoardFormFactorType motherBoardFormFactor, Bios bios)
     {
         Name = name;
         Socket = socket;
@@ -33,7 +32,7 @@ public class MotherBoard : BaseComponent, IPrototype, IEquatable<MotherBoard>
     public int StandardOfDDR { get; protected set; }
     public int RAMSlots { get; protected set; }
     public MotherBoardFormFactorType MotherBoardFormFactor { get; protected set; }
-    public BIOS BIOS { get; protected set; } = new BIOS();
+    public Bios BIOS { get; protected set; } = new Bios();
     public IPrototype Clone()
     {
         return new MotherBoard(Name, Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, BIOS);
@@ -64,7 +63,7 @@ public class MotherBoard : BaseComponent, IPrototype, IEquatable<MotherBoard>
         return new MotherBoard(newName, Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, newType, BIOS);
     }
 
-    public IPrototype CloneWithNewBios(BIOS newBios, string newName)
+    public IPrototype CloneWithNewBios(Bios newBios, string newName)
     {
         return new MotherBoard(newName, Socket, NumberOfPCIE, NumberOfSATA, Chipset, StandardOfDDR, RAMSlots, MotherBoardFormFactor, newBios);
     }

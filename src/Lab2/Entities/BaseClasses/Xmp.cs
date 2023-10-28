@@ -3,9 +3,9 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class XMP : BaseComponent, IPrototype, IEquatable<XMP>
+public class Xmp : BaseComponent, IPrototype, IEquatable<Xmp>
 {
-    public XMP(string name, string timing, int voltage, int frequency)
+    public Xmp(string name, string timing, int voltage, int frequency)
     {
         Name = name;
         Timing = timing;
@@ -18,15 +18,15 @@ public class XMP : BaseComponent, IPrototype, IEquatable<XMP>
     public int Frequency { get; protected set; }
     public IPrototype Clone()
     {
-        return new XMP(Name, Timing, Voltage, Frequency);
+        return new Xmp(Name, Timing, Voltage, Frequency);
     }
 
     public IPrototype CloneWithNewTiming(string timing, string newName)
     {
-        return new XMP(newName, timing, Voltage, Frequency);
+        return new Xmp(newName, timing, Voltage, Frequency);
     }
 
-    public bool Equals(XMP? other)
+    public bool Equals(Xmp? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -37,8 +37,8 @@ public class XMP : BaseComponent, IPrototype, IEquatable<XMP>
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj is not XMP) return false;
-        return Equals((XMP)obj);
+        if (obj is not Xmp) return false;
+        return Equals((Xmp)obj);
     }
 
     public override int GetHashCode()

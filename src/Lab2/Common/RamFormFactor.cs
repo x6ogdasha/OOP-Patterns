@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab2.Common;
 
-public enum RAMFormFactor
+public enum RamFormFactor
 {
     DIMM,
     SODIMM,

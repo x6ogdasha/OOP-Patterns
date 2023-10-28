@@ -8,10 +8,10 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.Builder;
 public class Director
 {
     private RepositoryContext _currentRepository = new RepositoryContext();
-    private CreateComponents _service;
+    private Seeding _service;
     public Director()
     {
-        _service = new CreateComponents(_currentRepository);
+        _service = new Seeding(_currentRepository);
     }
 
     public ComputerBuilder Builder { get; set; } = new ComputerBuilder();
@@ -19,14 +19,14 @@ public class Director
     public Computer BuildComputer(string motherName, string cpuName, string? biosName, string coolingName, string ramName, string? xmpName, string? gpuName, string? ssdName, string? hddName, string caseName, string powerName, string? wifiName)
     {
         Builder.MotherBoard(_service.Repository.MotherRepository.Read(motherName) ?? throw new InvalidOperationException());
-        Builder.CPU(_service.Repository.CpuRepository.Read(cpuName) ?? throw new InvalidOperationException());
-        Builder.BIOS(_service.Repository.BiosRepository.Read(biosName));
+        Builder.Cpu(_service.Repository.CpuRepository.Read(cpuName) ?? throw new InvalidOperationException());
+        Builder.Bios(_service.Repository.BiosRepository.Read(biosName));
         Builder.CoolingSystem(_service.Repository.CoolingRepository.Read(coolingName) ?? throw new InvalidOperationException());
-        Builder.RAM(_service.Repository.RamRepository.Read(ramName) ?? throw new InvalidOperationException());
-        Builder.XMP(_service.Repository.XmpRepository.Read(xmpName));
-        Builder.GPU(_service.Repository.GpuRepository.Read(gpuName));
-        Builder.SSD(_service.Repository.SsdRepository.Read(ssdName));
-        Builder.HDD(_service.Repository.HddRepository.Read(hddName));
+        Builder.Ram(_service.Repository.RamRepository.Read(ramName) ?? throw new InvalidOperationException());
+        Builder.Xmp(_service.Repository.XmpRepository.Read(xmpName));
+        Builder.Gpu(_service.Repository.GpuRepository.Read(gpuName));
+        Builder.Ssd(_service.Repository.SsdRepository.Read(ssdName));
+        Builder.Hdd(_service.Repository.HddRepository.Read(hddName));
         Builder.ComputerCase(_service.Repository.CaseRepository.Read(caseName) ?? throw new InvalidOperationException());
         Builder.PowerBlock(_service.Repository.PowerRepository.Read(powerName) ?? throw new InvalidOperationException());
         Builder.WiFiAdapter(_service.Repository.WifiRepository.Read(wifiName));

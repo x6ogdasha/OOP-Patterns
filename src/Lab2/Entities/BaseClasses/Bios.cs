@@ -5,15 +5,15 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class BIOS : BaseComponent, IPrototype, IEquatable<BIOS>
+public class Bios : BaseComponent, IPrototype, IEquatable<Bios>
 {
-    public BIOS()
+    public Bios()
     {
         SupportedCPUs = new List<string>();
-        Version = "null";
+        Version = string.Empty;
     }
 
-    public BIOS(string name, BIOSType type, string version, IReadOnlyList<string> supportedCPUs)
+    public Bios(string name, BiosType type, string version, IReadOnlyList<string> supportedCPUs)
     {
         Name = name;
         Type = type;
@@ -21,25 +21,25 @@ public class BIOS : BaseComponent, IPrototype, IEquatable<BIOS>
         SupportedCPUs = supportedCPUs;
     }
 
-    public BIOSType Type { get; set; }
+    public BiosType Type { get; set; }
     public string Version { get; protected set; }
     public IReadOnlyList<string> SupportedCPUs { get; set; }
     public IPrototype Clone()
     {
-        return new BIOS(Name, Type, Version, SupportedCPUs);
+        return new Bios(Name, Type, Version, SupportedCPUs);
     }
 
     public IPrototype CloneWithNewVersion(string newVersion, string newName)
     {
-        return new BIOS(newName, Type, newVersion, SupportedCPUs);
+        return new Bios(newName, Type, newVersion, SupportedCPUs);
     }
 
     public IPrototype CloneWithNewAllowedList(IReadOnlyList<string> newList, string newName)
     {
-        return new BIOS(newName, Type, Version, newList);
+        return new Bios(newName, Type, Version, newList);
     }
 
-    public bool Equals(BIOS? other)
+    public bool Equals(Bios? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -50,8 +50,8 @@ public class BIOS : BaseComponent, IPrototype, IEquatable<BIOS>
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj is not BIOS) return false;
-        return Equals((BIOS)obj);
+        if (obj is not Bios) return false;
+        return Equals((Bios)obj);
     }
 
     public override int GetHashCode()

@@ -4,9 +4,9 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class RAM : BaseComponent, IPrototype, IEquatable<RAM>
+public class Ram : BaseComponent, IPrototype, IEquatable<Ram>
 {
-    public RAM(string name, int memorySize, int frequency, int voltage, RAMFormFactor formFactor, int standardOfDdr, int power, XMP? profileXmp)
+    public Ram(string name, int memorySize, int frequency, int voltage, RamFormFactor formFactor, int standardOfDdr, int power, Xmp? profileXmp)
     {
         Name = name;
         MemorySize = memorySize;
@@ -18,44 +18,44 @@ public class RAM : BaseComponent, IPrototype, IEquatable<RAM>
         ProfileXMP = profileXmp;
     }
 
-    public RAM()
+    public Ram()
     {
-        Name = "null";
+        Name = string.Empty;
     }
 
     public int MemorySize { get; protected set; }
     public int Frequency { get; protected set; }
     public int Voltage { get; protected set; }
-    public RAMFormFactor FormFactor { get; protected set; }
+    public RamFormFactor FormFactor { get; protected set; }
     public int StandardOfDDR { get; protected set; }
     public int Power { get; protected set; }
-    public XMP? ProfileXMP { get; protected set; }
+    public Xmp? ProfileXMP { get; protected set; }
     public IPrototype Clone()
     {
-        return new RAM(Name, MemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
+        return new Ram(Name, MemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
     }
 
     public IPrototype CloneWithNewMemorySize(int newMemorySize, string newName)
     {
-        return new RAM(newName, newMemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
+        return new Ram(newName, newMemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
     }
 
     public IPrototype CloneWithNewFrequency(int newFrequency, string newName)
     {
-        return new RAM(newName, MemorySize, newFrequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
+        return new Ram(newName, MemorySize, newFrequency, Voltage, FormFactor, StandardOfDDR, Power, ProfileXMP);
     }
 
     public IPrototype CloneWithNewStandardOfDdr(int newStandard, string newName)
     {
-        return new RAM(newName, MemorySize, Frequency, Voltage, FormFactor, newStandard, Power, ProfileXMP);
+        return new Ram(newName, MemorySize, Frequency, Voltage, FormFactor, newStandard, Power, ProfileXMP);
     }
 
-    public IPrototype CloneWithNewProfileXmp(XMP? newXmp, string newName)
+    public IPrototype CloneWithNewProfileXmp(Xmp? newXmp, string newName)
     {
-        return new RAM(newName, MemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, newXmp);
+        return new Ram(newName, MemorySize, Frequency, Voltage, FormFactor, StandardOfDDR, Power, newXmp);
     }
 
-    public bool Equals(RAM? other)
+    public bool Equals(Ram? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -66,8 +66,8 @@ public class RAM : BaseComponent, IPrototype, IEquatable<RAM>
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj is not RAM) return false;
-        return Equals((RAM)obj);
+        if (obj is not Ram) return false;
+        return Equals((Ram)obj);
     }
 
     public override int GetHashCode()

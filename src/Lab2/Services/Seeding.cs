@@ -6,9 +6,9 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Repositories;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Services;
 
-public class CreateComponents
+public class Seeding
 {
-    public CreateComponents(RepositoryContext repository)
+    public Seeding(RepositoryContext repository)
     {
         Repository = repository;
         AddComponents();
@@ -35,19 +35,19 @@ public class CreateComponents
 
     private void CreateBios()
     {
-        Repository.BiosRepository.Create(new BIOS(
+        Repository.BiosRepository.Create(new Bios(
             "ASUS BIOS",
-            BIOSType.UEFI,
+            BiosType.UEFI,
             "2.0",
             new List<string>() { "Intel Core i9", "AM4" }));
-        Repository.BiosRepository.Create(new BIOS(
+        Repository.BiosRepository.Create(new Bios(
             "MSI BIOS",
-            BIOSType.Legacy,
+            BiosType.Legacy,
             "1.5",
             new List<string>() { "Intel Core i7", "AM5" }));
-        Repository.BiosRepository.Create(new BIOS(
+        Repository.BiosRepository.Create(new Bios(
             "Gigabyte BIOS",
-            BIOSType.UEFI,
+            BiosType.UEFI,
             "3.1",
             new List<string>() { "LGA1700", "AM5" }));
     }
@@ -107,7 +107,7 @@ public class CreateComponents
 
     private void CreateCPU()
     {
-        Repository.CpuRepository.Create(new CPU(
+        Repository.CpuRepository.Create(new Cpu(
             "Intel Core i5-11600k",
             "LGA1200",
             6,
@@ -116,7 +116,7 @@ public class CreateComponents
             new List<string> { "3200", "2933" },
             95,
             65));
-        Repository.CpuRepository.Create(new CPU(
+        Repository.CpuRepository.Create(new Cpu(
             "AMD Ryzen 7 5700G",
             "AM4",
             8,
@@ -125,7 +125,7 @@ public class CreateComponents
             new List<string> { "3600", "3200" },
             65,
             95));
-        Repository.CpuRepository.Create(new CPU(
+        Repository.CpuRepository.Create(new Cpu(
             "Intel Core i7-12900k",
             "LGA1700",
             16,
@@ -138,7 +138,7 @@ public class CreateComponents
 
     private void CreateGPU()
     {
-        Repository.GpuRepository.Create(new GPU(
+        Repository.GpuRepository.Create(new Gpu(
             "Nvidia GeFroce RTX 3080",
             120,
             260,
@@ -146,7 +146,7 @@ public class CreateComponents
             10_240,
             1_440,
             320));
-        Repository.GpuRepository.Create(new GPU(
+        Repository.GpuRepository.Create(new Gpu(
             "AMD Radeon RX 6700 XT",
             110,
             240,
@@ -154,7 +154,7 @@ public class CreateComponents
             12_288,
             2_525,
             230));
-        Repository.GpuRepository.Create(new GPU(
+        Repository.GpuRepository.Create(new Gpu(
             "Nvidia GeFroce RTX 3060",
             80,
             170,
@@ -166,17 +166,17 @@ public class CreateComponents
 
     private void CreateHDD()
     {
-        Repository.HddRepository.Create(new HDD(
+        Repository.HddRepository.Create(new Hdd(
             "Seagate Barracuda 4TB",
             4_000,
             7_200,
             80));
-        Repository.HddRepository.Create(new HDD(
+        Repository.HddRepository.Create(new Hdd(
             "Western Digital 1TB",
             1_000,
             5_400,
             40));
-        Repository.HddRepository.Create(new HDD(
+        Repository.HddRepository.Create(new Hdd(
             "Seagate IronWolf 10TB",
             10_000,
             7_200,
@@ -214,7 +214,7 @@ public class CreateComponents
             4,
             16,
             MotherBoardFormFactorType.MiniATX,
-            new BIOS("ASRock BIOS", BIOSType.Legacy, "1.5", new List<string> { "AMD EPYC" })));
+            new Bios("ASRock BIOS", BiosType.Legacy, "1.5", new List<string> { "AMD EPYC" })));
     }
 
     private void CreatePowerBlock()
@@ -232,30 +232,30 @@ public class CreateComponents
 
     private void CreateRAM()
     {
-        Repository.RamRepository.Create(new RAM(
+        Repository.RamRepository.Create(new Ram(
             "Corsair Vengeance LPX 16GB",
             16,
             3200,
             135,
-            RAMFormFactor.DIMM,
+            RamFormFactor.DIMM,
             4,
             2,
             null));
-        Repository.RamRepository.Create(new RAM(
+        Repository.RamRepository.Create(new Ram(
             "G.Skill Trident Z RGB 32GB",
             32,
             3600,
             135,
-            RAMFormFactor.DIMM,
+            RamFormFactor.DIMM,
             4,
             3,
-            new XMP("XMP 2", "2-2-2-2", 1, 10)));
-        Repository.RamRepository.Create(new RAM(
+            new Xmp("XMP 2", "2-2-2-2", 1, 10)));
+        Repository.RamRepository.Create(new Ram(
             "Crucial 32GB ECC RDIMM",
             32,
             2933,
             120,
-            RAMFormFactor.RDIMM,
+            RamFormFactor.RDIMM,
             4,
             2,
             null));
@@ -263,19 +263,19 @@ public class CreateComponents
 
     private void CreateSSD()
     {
-        Repository.SsdRepository.Create(new SSD(
+        Repository.SsdRepository.Create(new Ssd(
             "Samsung 860 EVO 500GB",
             MemoryConnectionType.SATA,
             500,
             550,
             2));
-        Repository.SsdRepository.Create(new SSD(
+        Repository.SsdRepository.Create(new Ssd(
             "Western Digital Black 1TB",
             MemoryConnectionType.PCIE,
             1_000,
             7000,
             5));
-        Repository.SsdRepository.Create(new SSD(
+        Repository.SsdRepository.Create(new Ssd(
             "Crucial MX500 250GB",
             MemoryConnectionType.SATA,
             250,
@@ -285,19 +285,19 @@ public class CreateComponents
 
     private void CreateWiFiAdapter()
     {
-        Repository.WifiRepository.Create(new WiFiAdapter(
+        Repository.WifiRepository.Create(new WifiAdapter(
             "Intel Wi-Fi 6 AX200",
             "Wi-Fi 6",
             true,
             3,
             2));
-        Repository.WifiRepository.Create(new WiFiAdapter(
+        Repository.WifiRepository.Create(new WifiAdapter(
             "TP-Link Archer T9E",
             "Wi-Fi 5",
             false,
             2,
             3));
-        Repository.WifiRepository.Create(new WiFiAdapter(
+        Repository.WifiRepository.Create(new WifiAdapter(
             "Asus PCE-AX58BT",
             "Wi-Fi 6E",
             true,
@@ -307,17 +307,17 @@ public class CreateComponents
 
     private void CreateXMP()
     {
-        Repository.XmpRepository.Create(new XMP(
+        Repository.XmpRepository.Create(new Xmp(
             "XMP Profile 1",
             "16-18-18-36",
             135,
             3200));
-        Repository.XmpRepository.Create(new XMP(
+        Repository.XmpRepository.Create(new Xmp(
             "XMP Profile 2",
             "15-16-16-35",
             140,
             3600));
-        Repository.XmpRepository.Create(new XMP(
+        Repository.XmpRepository.Create(new Xmp(
             "XMP Profile 3",
             "14-14-14-34",
             145,

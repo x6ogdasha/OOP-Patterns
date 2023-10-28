@@ -3,9 +3,9 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class GPU : BaseComponent, IPrototype, IEquatable<GPU>
+public class Gpu : BaseComponent, IPrototype, IEquatable<Gpu>
 {
-    public GPU(string name, int height, int width, int versionOfPcie, int videoMemory, int chipFrequency, int power)
+    public Gpu(string name, int height, int width, int versionOfPcie, int videoMemory, int chipFrequency, int power)
     {
         Name = name;
         Height = height;
@@ -24,20 +24,20 @@ public class GPU : BaseComponent, IPrototype, IEquatable<GPU>
     public int Power { get; protected set; }
     public IPrototype Clone()
     {
-        return new GPU(Name, Height, Width, VersionOfPCIE, VideoMemory, ChipFrequency, Power);
+        return new Gpu(Name, Height, Width, VersionOfPCIE, VideoMemory, ChipFrequency, Power);
     }
 
     public IPrototype CloneWithNewSize(int height, int width, string newName)
     {
-        return new GPU(newName, height, width, VersionOfPCIE, VideoMemory, ChipFrequency, Power);
+        return new Gpu(newName, height, width, VersionOfPCIE, VideoMemory, ChipFrequency, Power);
     }
 
     public IPrototype CloneWithNewVideoMemory(int newMemory, string newName)
     {
-        return new GPU(newName, Height, Width, VersionOfPCIE, newMemory, ChipFrequency, Power);
+        return new Gpu(newName, Height, Width, VersionOfPCIE, newMemory, ChipFrequency, Power);
     }
 
-    public bool Equals(GPU? other)
+    public bool Equals(Gpu? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -48,8 +48,8 @@ public class GPU : BaseComponent, IPrototype, IEquatable<GPU>
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj is not GPU) return false;
-        return Equals((GPU)obj);
+        if (obj is not Gpu) return false;
+        return Equals((Gpu)obj);
     }
 
     public override int GetHashCode()

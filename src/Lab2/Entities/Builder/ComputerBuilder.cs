@@ -7,33 +7,50 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.Builder;
 
 public class ComputerBuilder
 {
-    private BIOS? _bios;
+    private Bios? _bios;
     private ComputerCase _case;
     private CoolingSystem _coolingSystem;
-    private CPU _cpu;
-    private GPU? _gpu;
-    private HDD? _hdd;
+    private Cpu _cpu;
+    private Gpu? _gpu;
+    private Hdd? _hdd;
     private MotherBoard _motherBoard;
     private PowerBlock _powerBlock;
-    private RAM _ram;
-    private SSD? _ssd;
-    private WiFiAdapter? _wiFiAdapter;
-    private XMP? _xmp;
+    private Ram _ram;
+    private Ssd? _ssd;
+    private WifiAdapter? _wiFiAdapter;
+    private Xmp? _xmp;
 
     public ComputerBuilder()
     {
         _case = new ComputerCase();
         _coolingSystem = new CoolingSystem();
-        _cpu = new CPU();
+        _cpu = new Cpu();
         _motherBoard = new MotherBoard();
         _powerBlock = new PowerBlock();
-        _ram = new RAM();
+        _ram = new Ram();
         StatusOfBuilding = Status.Successful;
+    }
+
+    public ComputerBuilder(Computer computer)
+    {
+        if (computer is null) throw new ArgumentNullException(nameof(computer));
+        _bios = computer.Bios;
+        _case = computer.ComputerCase;
+        _coolingSystem = computer.CoolingSystem;
+        _cpu = computer.Cpu;
+        _gpu = computer.Gpu;
+        _hdd = computer.Hdd;
+        _motherBoard = computer.MotherBoard;
+        _powerBlock = computer.PowerBlock;
+        _ram = computer.Ram;
+        _ssd = computer.Ssd;
+        _wiFiAdapter = computer.WiFiAdapter;
+        _xmp = computer.Xmp;
     }
 
     public Status? StatusOfBuilding { get; set; }
 
-    public void BIOS(BIOS? bios)
+    public void Bios(Bios? bios)
     {
         if (bios is not null && bios.SupportedCPUs.Contains(_cpu.SocketName))
         {
@@ -80,7 +97,7 @@ public class ComputerBuilder
         }
     }
 
-    public void CPU(CPU cpu)
+    public void Cpu(Cpu cpu)
     {
         if (cpu is null) throw new ArgumentNullException(nameof(cpu));
 
@@ -94,7 +111,7 @@ public class ComputerBuilder
         }
     }
 
-    public void GPU(GPU? gpu)
+    public void Gpu(Gpu? gpu)
     {
         if (gpu is null && !_cpu.InternalGPU)
         {
@@ -107,7 +124,7 @@ public class ComputerBuilder
         }
     }
 
-    public void HDD(HDD? hdd)
+    public void Hdd(Hdd? hdd)
     {
         if (hdd is not null && _motherBoard.NumberOfSATA > 0)
         {
@@ -126,7 +143,7 @@ public class ComputerBuilder
 
     public void PowerBlock(PowerBlock powerBlock)
     {
-        if (powerBlock == null) throw new ArgumentNullException(nameof(powerBlock));
+        if (powerBlock is null) throw new ArgumentNullException(nameof(powerBlock));
 
         if (_cpu is not null && _gpu is not null &&
             _cpu.Power + _gpu.Power <= powerBlock.Power)
@@ -139,7 +156,7 @@ public class ComputerBuilder
         }
     }
 
-    public void RAM(RAM ram)
+    public void Ram(Ram ram)
     {
         if (ram is null) throw new ArgumentNullException(nameof(ram));
 
@@ -153,7 +170,7 @@ public class ComputerBuilder
         }
     }
 
-    public void SSD(SSD? ssd)
+    public void Ssd(Ssd? ssd)
     {
         if (ssd is not null && _motherBoard.NumberOfPCIE > 0)
         {
@@ -165,12 +182,12 @@ public class ComputerBuilder
         }
     }
 
-    public void WiFiAdapter(WiFiAdapter? wiFiAdapter)
+    public void WiFiAdapter(WifiAdapter? wiFiAdapter)
     {
         _wiFiAdapter = wiFiAdapter;
     }
 
-    public void XMP(XMP? xmp)
+    public void Xmp(Xmp? xmp)
     {
         _xmp = xmp;
     }

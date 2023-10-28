@@ -4,9 +4,9 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class SSD : BaseComponent, IPrototype, IEquatable<SSD>
+public class Ssd : BaseComponent, IPrototype, IEquatable<Ssd>
 {
-    public SSD(string name, MemoryConnectionType connectionType, int memoryCapacity, int speed, int power)
+    public Ssd(string name, MemoryConnectionType connectionType, int memoryCapacity, int speed, int power)
     {
         Name = name;
         ConnectionType = connectionType;
@@ -21,25 +21,25 @@ public class SSD : BaseComponent, IPrototype, IEquatable<SSD>
     public int Power { get; protected set; }
     public IPrototype Clone()
     {
-        return new SSD(Name, ConnectionType, MemoryCapacity, Speed, Power);
+        return new Ssd(Name, ConnectionType, MemoryCapacity, Speed, Power);
     }
 
     public IPrototype CloneWithNewConnectionType(MemoryConnectionType newType, string newName)
     {
-        return new SSD(newName, newType, MemoryCapacity, Speed, Power);
+        return new Ssd(newName, newType, MemoryCapacity, Speed, Power);
     }
 
     public IPrototype CloneWithNewCapacity(int newCapacity, string newName)
     {
-        return new SSD(newName, ConnectionType, newCapacity, Speed, Power);
+        return new Ssd(newName, ConnectionType, newCapacity, Speed, Power);
     }
 
     public IPrototype CloneWithNewSpeed(int newSpeed, string newName)
     {
-        return new SSD(newName, ConnectionType, MemoryCapacity, newSpeed, Power);
+        return new Ssd(newName, ConnectionType, MemoryCapacity, newSpeed, Power);
     }
 
-    public bool Equals(SSD? other)
+    public bool Equals(Ssd? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -50,8 +50,8 @@ public class SSD : BaseComponent, IPrototype, IEquatable<SSD>
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj is not SSD) return false;
-        return Equals((SSD)obj);
+        if (obj is not Ssd) return false;
+        return Equals((Ssd)obj);
     }
 
     public override int GetHashCode()

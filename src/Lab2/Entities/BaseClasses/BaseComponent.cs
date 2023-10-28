@@ -2,5 +2,5 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
 public abstract class BaseComponent
 {
-    public string Name { get; set; } = "null";
+    public string Name { get; set; } = string.Empty;
 }

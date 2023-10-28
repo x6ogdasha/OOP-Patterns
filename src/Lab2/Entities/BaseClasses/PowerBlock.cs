@@ -13,7 +13,7 @@ public class PowerBlock : BaseComponent, IPrototype, IEquatable<PowerBlock>
 
     public PowerBlock()
     {
-        Name = "null";
+        Name = string.Empty;
     }
 
     public int Power { get; protected set; }

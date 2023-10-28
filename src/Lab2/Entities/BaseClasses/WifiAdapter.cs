@@ -3,9 +3,9 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.Prototypes;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.BaseClasses;
 
-public class WiFiAdapter : BaseComponent, IPrototype, IEquatable<WiFiAdapter>
+public class WifiAdapter : BaseComponent, IPrototype, IEquatable<WifiAdapter>
 {
-    public WiFiAdapter(string name, string standardVersion, bool bluetoothModule, int versionOfPcie, int power)
+    public WifiAdapter(string name, string standardVersion, bool bluetoothModule, int versionOfPcie, int power)
     {
         Name = name;
         StandardVersion = standardVersion;
@@ -20,20 +20,20 @@ public class WiFiAdapter : BaseComponent, IPrototype, IEquatable<WiFiAdapter>
     public int Power { get; protected set; }
     public IPrototype Clone()
     {
-        return new WiFiAdapter(Name, StandardVersion, BluetoothModule, VersionOfPCIE, Power);
+        return new WifiAdapter(Name, StandardVersion, BluetoothModule, VersionOfPCIE, Power);
     }
 
     public IPrototype CloneWithNewStandard(string standard, string newName)
     {
-        return new WiFiAdapter(newName, standard, BluetoothModule, VersionOfPCIE, Power);
+        return new WifiAdapter(newName, standard, BluetoothModule, VersionOfPCIE, Power);
     }
 
     public IPrototype CloneWithNewBluetoothModule(bool module, string newName)
     {
-        return new WiFiAdapter(newName, StandardVersion, module, VersionOfPCIE, Power);
+        return new WifiAdapter(newName, StandardVersion, module, VersionOfPCIE, Power);
     }
 
-    public bool Equals(WiFiAdapter? other)
+    public bool Equals(WifiAdapter? other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -44,8 +44,8 @@ public class WiFiAdapter : BaseComponent, IPrototype, IEquatable<WiFiAdapter>
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        if (obj is not WiFiAdapter) return false;
-        return Equals((WiFiAdapter)obj);
+        if (obj is not WifiAdapter) return false;
+        return Equals((WifiAdapter)obj);
     }
 
     public override int GetHashCode()
