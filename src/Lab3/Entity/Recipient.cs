@@ -20,7 +20,6 @@ public abstract class Recipient : IReceive, ISend
 
     public virtual void SendTo(IReceive recipient)
     {
-        throw new System.NotImplementedException();
     }
 
     public virtual void SendTo(IReadOnlyList<IReceive> recipients)

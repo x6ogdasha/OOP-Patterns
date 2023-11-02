@@ -5,6 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
 public class UserAdapter : ISend, IReceive, IRead
 {
+    private readonly ILogger _logger = new Logger();
     private readonly Message _message;
     private readonly User _user;
 
@@ -18,6 +19,7 @@ public class UserAdapter : ISend, IReceive, IRead
     {
         if (recipient is null) throw new ArgumentNullException(nameof(recipient));
         recipient.Receive(_message);
+        _logger.Log("Сообщение ушло пользователю");
     }
 
     public void Receive(Message message)

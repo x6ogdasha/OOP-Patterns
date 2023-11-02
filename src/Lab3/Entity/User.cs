@@ -5,7 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
 public class User : IReceive, IRead
 {
-    private readonly Logger _logger = new Logger();
+    private readonly ILogger _logger = new Logger();
     public Message CurrentMessage { get; protected set; } = new();
     public Status MessageStatus { get; protected set; }
     public void Receive(Message message)
