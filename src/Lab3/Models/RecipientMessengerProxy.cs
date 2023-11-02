@@ -8,10 +8,7 @@ public class RecipientMessengerProxy : Recipient
 {
    private readonly RecipientMessenger _realRecipientMessenger;
 
-   public RecipientMessengerProxy(RecipientMessenger realRecipientMessenger)
-   {
-      _realRecipientMessenger = realRecipientMessenger;
-   }
+   public RecipientMessengerProxy(RecipientMessenger realRecipientMessenger) => _realRecipientMessenger = realRecipientMessenger;
 
    public override void SendTo(IReceive recipient)
    {

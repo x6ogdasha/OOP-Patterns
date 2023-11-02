@@ -8,10 +8,7 @@ public class RecipientDisplayProxy : Recipient
 {
     private readonly RecipientDisplay _realRecipientDisplay;
 
-    public RecipientDisplayProxy(RecipientDisplay recipientDisplay)
-    {
-        _realRecipientDisplay = recipientDisplay;
-    }
+    public RecipientDisplayProxy(RecipientDisplay recipientDisplay) => _realRecipientDisplay = recipientDisplay;
 
     public override void SendTo(IReceive recipient)
     {

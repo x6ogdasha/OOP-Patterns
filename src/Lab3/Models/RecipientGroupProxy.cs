@@ -9,10 +9,7 @@ public class RecipientGroupProxy : Recipient
 {
     private readonly RecipientGroup _realRecipientGroup;
 
-    public RecipientGroupProxy(RecipientGroup recipientGroup)
-    {
-        _realRecipientGroup = recipientGroup;
-    }
+    public RecipientGroupProxy(RecipientGroup recipientGroup) => _realRecipientGroup = recipientGroup;
 
     public override void SendTo(IReadOnlyList<IReceive> recipients)
     {

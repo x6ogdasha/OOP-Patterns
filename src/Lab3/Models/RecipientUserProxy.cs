@@ -7,10 +7,7 @@ public class RecipientUserProxy : Recipient
 {
     private readonly RecipientUser _realRecipientUser;
 
-    public RecipientUserProxy(RecipientUser realRecipientUser)
-    {
-        _realRecipientUser = realRecipientUser;
-    }
+    public RecipientUserProxy(RecipientUser realRecipientUser) => _realRecipientUser = realRecipientUser;
 
     public override void SendTo(IReceive recipient)
     {
