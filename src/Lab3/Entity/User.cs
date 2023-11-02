@@ -5,7 +5,17 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
 public class User : IReceive, IRead
 {
-    private readonly ILogger _logger = new Logger();
+    private readonly Logger _logger = new Logger();
+
+    public User(Logger logger)
+    {
+        _logger = logger;
+    }
+
+    public User()
+    {
+    }
+
     public Message CurrentMessage { get; protected set; } = new();
     public Status MessageStatus { get; protected set; }
     public void Receive(Message message)
@@ -17,6 +27,13 @@ public class User : IReceive, IRead
 
     public void Read()
     {
-        if (MessageStatus == Status.Unread) MessageStatus = Status.Read;
+        if (MessageStatus == Status.Unread)
+        {
+            MessageStatus = Status.Read;
+        }
+        else
+        {
+            throw new AlreadyReadException();
+        }
     }
 }

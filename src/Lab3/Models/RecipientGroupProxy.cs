@@ -7,9 +7,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Models;
 
 public class RecipientGroupProxy : Recipient
 {
-    private readonly RecipientGroup _realRecipientGroup;
+    private readonly Recipient _realRecipientGroup;
+    private readonly Logger _logger = new Logger();
 
-    public RecipientGroupProxy(RecipientGroup recipientGroup) => _realRecipientGroup = recipientGroup;
+    public RecipientGroupProxy(Recipient recipientGroup) => _realRecipientGroup = recipientGroup;
+
+    public RecipientGroupProxy(Recipient realRecipientGroup, Logger logger)
+    {
+        _realRecipientGroup = realRecipientGroup;
+        _logger = logger;
+    }
 
     public override void SendTo(IReadOnlyList<IReceive> recipients)
     {
@@ -21,9 +28,13 @@ public class RecipientGroupProxy : Recipient
     {
         foreach (IReceive recipient in recipients)
         {
-            if (!(CurrentMessage.Importance <= Importance && recipient is User)) return false;
+            if (!(CurrentMessage.Importance <= Importance && recipient is User))
+            {
+                return false;
+            }
         }
 
+        _logger.Log("Фильтр пройден сообщения уходят");
         return true;
     }
 }

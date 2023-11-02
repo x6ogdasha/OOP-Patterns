@@ -5,7 +5,16 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
 public class Messenger : IReceive, IDisplay
 {
-    private readonly ILogger _logger = new Logger();
+    private readonly Logger _logger = new Logger();
+    public Messenger(Logger logger)
+    {
+        _logger = logger;
+    }
+
+    public Messenger()
+    {
+    }
+
     public Message? CurrentMessage { get; protected set; }
 
     public void Receive(Message message)

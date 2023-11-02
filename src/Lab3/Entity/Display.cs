@@ -5,8 +5,17 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
 public class Display : IReceive
 {
-    private readonly ILogger _logger = new Logger();
+    private readonly Logger _logger = new Logger();
     private readonly DisplayDriver _displayDriver = new DisplayDriver();
+
+    public Display(Logger logger)
+    {
+        _logger = logger;
+    }
+
+    public Display()
+    {
+    }
 
     public Message? CurrentMessage { get; protected set; }
 
