@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab3.Interfaces;
 
-public interface IFilter
+public interface IWrite
 {
-    public void Filter();
+    public void Write(string text);
 }

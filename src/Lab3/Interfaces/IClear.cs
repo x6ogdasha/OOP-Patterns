@@ -1,6 +1,6 @@
 namespace Itmo.ObjectOrientedProgramming.Lab3.Interfaces;
 
-public interface ILog
+public interface IClear
 {
-    public void Log();
+    public void Clear();
 }
