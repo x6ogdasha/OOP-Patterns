@@ -2,6 +2,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
 public class Thread
 {
+    private readonly Logger _logger = new Logger();
     public Thread(Recipient recipient, string name)
     {
         CurrentRecipient = recipient;
@@ -14,5 +15,6 @@ public class Thread
     public void SendToRecipient(Message message)
     {
         CurrentRecipient.Receive(message);
+        _logger.Log("Сообщение направлено адресату");
     }
 }

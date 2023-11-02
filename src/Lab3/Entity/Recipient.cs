@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.Interfaces;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
-public abstract class Recipient : IFilter, IReceive, ISend
+public abstract class Recipient : IReceive, ISend
 {
     protected Recipient()
     {
@@ -12,11 +12,6 @@ public abstract class Recipient : IFilter, IReceive, ISend
 
     public Message CurrentMessage { get; protected set; }
     public int Importance { get; protected set; }
-
-    public void Filter()
-    {
-        throw new System.NotImplementedException();
-    }
 
     public void Receive(Message message)
     {
