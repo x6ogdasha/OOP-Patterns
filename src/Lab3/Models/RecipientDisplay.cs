@@ -18,6 +18,6 @@ public class RecipientDisplay : Recipient
     public override void SendTo(IReceive recipient)
     {
         if (recipient is null) throw new ArgumentNullException(nameof(recipient));
-        if (CurrentMessage.Importance <= Importance && recipient is Display) recipient.Receive(CurrentMessage);
+        recipient.Receive(CurrentMessage);
     }
 }

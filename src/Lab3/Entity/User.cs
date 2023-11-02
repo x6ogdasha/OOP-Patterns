@@ -8,12 +8,6 @@ public class User : IReceive, IRead
     private readonly Logger _logger = new Logger();
     public Message CurrentMessage { get; protected set; } = new();
     public Status MessageStatus { get; protected set; }
-
-    // public void SendTo(Recipient recipient, Message message)
-    // {
-    //     if (recipient is null) throw new ArgumentNullException(nameof(recipient));
-    //     recipient.Receive(message);
-    // } ЗДЕСЬ НУЖЕН АДАПТЕР ДЛЯ ISEND
     public void Receive(Message message)
     {
         CurrentMessage = message;

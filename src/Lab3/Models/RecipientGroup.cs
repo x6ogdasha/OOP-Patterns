@@ -21,7 +21,7 @@ public class RecipientGroup : Recipient
         if (recipients is null) throw new ArgumentNullException(nameof(recipients));
         foreach (IReceive recipient in recipients)
         {
-            if (CurrentMessage.Importance <= Importance && recipient is User) recipient.Receive(CurrentMessage);
+            recipient.Receive(CurrentMessage);
         }
     }
 }

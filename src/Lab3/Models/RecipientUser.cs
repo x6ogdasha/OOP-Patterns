@@ -19,6 +19,6 @@ public class RecipientUser : Recipient
     public override void SendTo(IReceive recipient)
     {
         if (recipient is null) throw new ArgumentNullException(nameof(recipient));
-        if (CurrentMessage.Importance <= Importance && recipient is User) recipient.Receive(CurrentMessage);
+        recipient.Receive(CurrentMessage);
     }
 }
