@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.Interfaces;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
-public class Messenger : IReceive, IDisplay
+public class Messenger : IReceive
 {
     private readonly Logger _logger = new Logger();
     public Messenger(Logger logger)
