@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.Interfaces;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
-public class DisplayDriver : IClear, ISetColor, IWrite
+public class DisplayDriver : IDriver
 {
     public void Clear()
     {
