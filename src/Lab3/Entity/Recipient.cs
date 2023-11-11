@@ -5,12 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab3.Entity;
 
 public abstract class Recipient : IReceive, ISend
 {
-    protected Recipient()
-    {
-        CurrentMessage = new Message();
-    }
-
-    public Message CurrentMessage { get; protected set; }
+    public Message CurrentMessage { get; protected set; } = new();
     public int Importance { get; protected set; }
 
     public void Receive(Message message)

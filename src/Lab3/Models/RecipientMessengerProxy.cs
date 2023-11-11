@@ -33,6 +33,6 @@ public class RecipientMessengerProxy : Recipient
 
    private bool Check(IReceive recipient)
    {
-      return CurrentMessage.Importance <= Importance && recipient is Messenger;
+      return _realRecipientMessenger.CurrentMessage.Importance <= _realRecipientMessenger.Importance && recipient is Messenger;
    }
 }

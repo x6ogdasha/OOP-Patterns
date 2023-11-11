@@ -51,8 +51,9 @@ public class Test3
         var user = new User();
         var recipientUser = new RecipientUser(message);
         var userProxy = new RecipientUserProxy(recipientUser, mockLogger);
+
         userProxy.SendTo(user);
-        mockLogger.Received(1).Log("Фильтр не пройден сообщение не ушло");
+        mockLogger.Received(1).Log("Фильтр не пройден сообщение не уходит");
     }
 
     [Fact]

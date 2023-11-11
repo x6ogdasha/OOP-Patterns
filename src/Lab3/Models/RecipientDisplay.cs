@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab3.Interfaces;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Models;
 
-public class RecipientDisplay : Recipient
+public class RecipientDisplay : Recipient, ISend
 {
     private const int DisplayImportance = 3;
     private readonly Logger _logger = new Logger();
