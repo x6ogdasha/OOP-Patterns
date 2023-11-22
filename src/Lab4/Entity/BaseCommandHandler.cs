@@ -9,10 +9,10 @@ public abstract class BaseCommandHandler
         NextHandler = handler;
     }
 
-    public virtual void Handle(string command)
+    public virtual void Handle(Request currentRequest)
     {
-        NextHandler?.Handle(command);
+        NextHandler?.Handle(currentRequest);
     }
 
-    protected abstract bool CanHandle(string command);
+    protected abstract bool CanHandle(Request currentRequest);
 }
