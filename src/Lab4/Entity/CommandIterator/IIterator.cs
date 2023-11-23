@@ -1,4 +1,4 @@
-namespace Itmo.ObjectOrientedProgramming.Lab4.Entity;
+namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.CommandIterator;
 
 public interface IIterator
 {

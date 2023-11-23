@@ -4,8 +4,8 @@ public class Request
 {
     public Request(string command)
     {
-        CommandText = command;
+        RequestText = command;
     }
 
-    public string CommandText { get; set; }
+    public string RequestText { get; set; }
 }

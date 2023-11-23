@@ -1,4 +1,5 @@
 using System;
+using Itmo.ObjectOrientedProgramming.Lab4.Entity.CommandIterator;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Entity;
 
