@@ -4,10 +4,11 @@ using Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Entity;
 
-public class LocalFileSystem : IFileSystem
+public class LocalFileSystem : IFileSystem, IRootedPath
 {
     private string _path = string.Empty;
     private DirectoryInfo? _directory;
+    private FileInfo? _file;
 
     public void Connect(string address)
     {
@@ -23,40 +24,85 @@ public class LocalFileSystem : IFileSystem
     public void TreeGoto(string path)
     {
         _path = path;
+        _directory = new DirectoryInfo(_path);
     }
 
     public void TreeList(int depth)
     {
-        throw new System.NotImplementedException();
+        if (_directory is not null) BuildTree(_directory, depth, 0);
     }
 
-    public void FileShow(string address)
+    public void FileShow(string path)
     {
-        throw new System.NotImplementedException();
+        if (!IsPathExists(path)) return;
+        string fullPath = _path + '/' + path;
+        Console.WriteLine(File.ReadAllText(fullPath));
     }
 
-    public void FileMove(string addressFrom)
+    public void FileMove(string sourcePath, string destinationPath)
     {
-        throw new NotImplementedException();
+        _file = new FileInfo(sourcePath);
+        if (_file.Exists)
+        {
+            _file.MoveTo(destinationPath + '/' + _file.Name);
+        }
     }
 
-    public void FileMove(string addressFrom, string addressTo)
+    public void FileCopy(string sourcePath, string destinationPath)
     {
-        throw new System.NotImplementedException();
+        _file = new FileInfo(sourcePath);
+        if (_file.Exists)
+        {
+            _file.CopyTo(destinationPath);
+        }
     }
 
-    public void FileCopy(string addressFrom, string addressTo)
+    public void FileDelete(string path)
     {
-        throw new System.NotImplementedException();
+        _file = new FileInfo(path);
+        if (_file.Exists)
+        {
+            _file.Delete();
+        }
     }
 
-    public void FileDelete(string address)
+    public void FileRename(string path, string newName)
     {
-        throw new System.NotImplementedException();
+        _file = new FileInfo(path);
+        if (_file.Exists)
+        {
+            File.Move(_file.Name, newName);
+        }
     }
 
-    public void FileRename(string address, string newName)
+    public void BuildTree(DirectoryInfo dir, int depth, int tabCount)
     {
-        throw new System.NotImplementedException();
+        if (dir is null) throw new ArgumentNullException(nameof(dir));
+        if (depth == 0) return;
+        depth--;
+        tabCount++;
+        foreach (DirectoryInfo s in dir.GetDirectories())
+        {
+            for (int i = 0; i < tabCount; i++) Console.Write("\t");
+            Console.WriteLine(s.Name);
+            BuildTree(s, depth, tabCount);
+        }
+
+        foreach (FileInfo z in dir.GetFiles())
+        {
+            for (int i = 0; i < tabCount; i++) Console.Write("\t");
+            Console.WriteLine(z.Name);
+        }
+    }
+
+    public bool IsRooted(string path)
+    {
+        if (!string.IsNullOrEmpty(path) && path[0] == '/') return true;
+        return false;
+    }
+
+    public bool IsPathExists(string path)
+    {
+        return Directory.Exists(_path + '/' + path);
     }
 }

@@ -5,14 +5,14 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.FileCommand;
 
 public class FileMoveHandler : CommandHandler, IParse
 {
-    private string _sourthPath;
-    private string _destinationPath;
+    private string _sourcePath = string.Empty;
+    private string _destinationPath = string.Empty;
 
     public void Parse(Iterator iterator)
     {
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
         iterator.GoNext();
-        _sourthPath = iterator.Current();
+        _sourcePath = iterator.Current();
         iterator.GoNext();
         _destinationPath = iterator.Current();
     }
@@ -21,7 +21,7 @@ public class FileMoveHandler : CommandHandler, IParse
     {
         if (!CanHandle(currentRequest)) base.Handle(currentRequest, iterator, fileSystem);
         Parse(iterator);
-        fileSystem?.FileMove(_sourthPath, _destinationPath);
+        fileSystem?.FileMove(_sourcePath, _destinationPath);
     }
 
     protected override bool CanHandle(Request currentRequest)
