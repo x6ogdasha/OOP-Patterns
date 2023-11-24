@@ -5,7 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.ConnectionCommands
 
 public class DisconnectHandler : CommandHandler
 {
-    public override void Handle(Request currentRequest, Iterator iterator, IFileSystem? fileSystem)
+    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
     {
         if (CanHandle(currentRequest))
         {
@@ -13,7 +13,7 @@ public class DisconnectHandler : CommandHandler
         }
         else
         {
-            base.Handle(currentRequest, iterator, fileSystem);
+            base.Handle(currentRequest, iterator, ref fileSystem);
         }
     }
 

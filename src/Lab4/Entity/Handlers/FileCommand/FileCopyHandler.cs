@@ -17,11 +17,17 @@ public class FileCopyHandler : CommandHandler, IParse
         _destinationPath = iterator.Current();
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, IFileSystem? fileSystem)
+    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
     {
-        if (!CanHandle(currentRequest)) base.Handle(currentRequest, iterator, fileSystem);
-        Parse(iterator);
-        fileSystem?.FileCopy(_sourcePath, _destinationPath);
+        if (!CanHandle(currentRequest))
+        {
+            base.Handle(currentRequest, iterator, ref fileSystem);
+        }
+        else
+        {
+            Parse(iterator);
+            fileSystem?.FileCopy(_sourcePath, _destinationPath);
+        }
     }
 
     protected override bool CanHandle(Request currentRequest)

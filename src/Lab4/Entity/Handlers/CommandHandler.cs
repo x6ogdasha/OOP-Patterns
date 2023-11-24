@@ -11,9 +11,9 @@ public abstract class CommandHandler
         return NextHandler;
     }
 
-    public virtual void Handle(Request currentRequest, Iterator iterator, IFileSystem? fileSystem)
+    public virtual void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
     {
-        NextHandler?.Handle(currentRequest, iterator, fileSystem);
+        NextHandler?.Handle(currentRequest, iterator, ref fileSystem);
     }
 
     protected abstract bool CanHandle(Request currentRequest);

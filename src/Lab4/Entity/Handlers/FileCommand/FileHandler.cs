@@ -24,14 +24,19 @@ public class FileHandler : CommandHandler, IBuildNestedChain
         currentRequest.RequestText = iterator.Current();
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, IFileSystem? fileSystem)
+    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
     {
         if (currentRequest is null) throw new ArgumentNullException(nameof(currentRequest));
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
-        if (!CanHandle(currentRequest)) base.Handle(currentRequest, iterator, fileSystem);
-
-        BuildNestedChain(currentRequest, iterator);
-        _fileCopyHandler.Handle(currentRequest, iterator, fileSystem);
+        if (!CanHandle(currentRequest))
+        {
+            base.Handle(currentRequest, iterator, ref fileSystem);
+        }
+        else
+        {
+            BuildNestedChain(currentRequest, iterator);
+            _fileCopyHandler.Handle(currentRequest, iterator, ref fileSystem);
+        }
     }
 
     protected override bool CanHandle(Request currentRequest)

@@ -20,11 +20,17 @@ public class FileShowHandler : CommandHandler, IParse
         _mode = iterator.Current();
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, IFileSystem? fileSystem)
+    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
     {
-        if (!CanHandle(currentRequest)) base.Handle(currentRequest, iterator, fileSystem);
-        Parse(iterator);
-        fileSystem?.FileShow(_path);
+        if (!CanHandle(currentRequest))
+        {
+            base.Handle(currentRequest, iterator, ref fileSystem);
+        }
+        else
+        {
+            Parse(iterator);
+            fileSystem?.FileShow(_path);
+        }
     }
 
     protected override bool CanHandle(Request currentRequest)

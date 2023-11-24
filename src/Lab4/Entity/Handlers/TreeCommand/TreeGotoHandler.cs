@@ -15,12 +15,17 @@ public class TreeGotoHandler : CommandHandler, IParse
         _path = iterator.Current();
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, IFileSystem? fileSystem)
+    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
     {
-        if (!CanHandle(currentRequest)) base.Handle(currentRequest, iterator, fileSystem);
-        Parse(iterator);
-        Console.WriteLine(_path);
-        fileSystem?.TreeGoto(_path);
+        if (!CanHandle(currentRequest))
+        {
+            base.Handle(currentRequest, iterator, ref fileSystem);
+        }
+        else
+        {
+            Parse(iterator);
+            fileSystem?.TreeGoto(_path);
+        }
     }
 
     protected override bool CanHandle(Request currentRequest)

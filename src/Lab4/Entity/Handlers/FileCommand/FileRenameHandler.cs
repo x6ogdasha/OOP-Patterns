@@ -17,11 +17,17 @@ public class FileRenameHandler : CommandHandler, IParse
         _newName = iterator.Current();
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, IFileSystem? fileSystem)
+    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
     {
-        if (!CanHandle(currentRequest)) base.Handle(currentRequest, iterator, fileSystem);
-        Parse(iterator);
-        fileSystem?.FileRename(_path, _newName);
+        if (!CanHandle(currentRequest))
+        {
+            base.Handle(currentRequest, iterator, ref fileSystem);
+        }
+        else
+        {
+            Parse(iterator);
+            fileSystem?.FileRename(_path, _newName);
+        }
     }
 
     protected override bool CanHandle(Request currentRequest)

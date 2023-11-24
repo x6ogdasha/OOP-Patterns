@@ -32,17 +32,21 @@ public class ConnectHandler : CommandHandler, IParse, ISetMode
         }
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, IFileSystem? fileSystem)
+    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
     {
         if (currentRequest is null) throw new ArgumentNullException(nameof(currentRequest));
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
 
-        if (!CanHandle(currentRequest)) base.Handle(currentRequest, iterator, fileSystem);
-        Parse(iterator);
-        fileSystem = SetMode();
-
-        Console.WriteLine(_address);
-        fileSystem?.Connect(_address);
+        if (!CanHandle(currentRequest))
+        {
+            base.Handle(currentRequest, iterator, ref fileSystem);
+        }
+        else
+        {
+            Parse(iterator);
+            fileSystem = SetMode();
+            fileSystem?.Connect(_address);
+        }
     }
 
     protected override bool CanHandle(Request currentRequest)

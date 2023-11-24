@@ -18,11 +18,17 @@ public class TreeListHandler : CommandHandler, IParse
         _depth = int.Parse(iterator.Current(), new NumberFormatInfo());
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, IFileSystem? fileSystem)
+    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
     {
-        if (!CanHandle(currentRequest)) base.Handle(currentRequest, iterator, fileSystem);
-        Parse(iterator);
-        fileSystem?.TreeList(_depth);
+        if (!CanHandle(currentRequest))
+        {
+            base.Handle(currentRequest, iterator, ref fileSystem);
+        }
+        else
+        {
+            Parse(iterator);
+            fileSystem?.TreeList(_depth);
+        }
     }
 
     protected override bool CanHandle(Request currentRequest)
