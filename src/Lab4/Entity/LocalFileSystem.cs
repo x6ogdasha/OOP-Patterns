@@ -12,8 +12,10 @@ public class LocalFileSystem : IFileSystem, IRootedPath
 
     public void Connect(string address)
     {
-        _directory = new DirectoryInfo(address);
-        _path = address;
+        string currentPath = HandlePath(address);
+        _directory = new DirectoryInfo(currentPath);
+        _path = currentPath;
+        Console.Write(_path + " ");
     }
 
     public void Disconnect()
@@ -23,55 +25,74 @@ public class LocalFileSystem : IFileSystem, IRootedPath
 
     public void TreeGoto(string path)
     {
-        _path = path;
+        string currentPath = HandlePath(path);
+        _path = currentPath;
         _directory = new DirectoryInfo(_path);
+
+        Console.Write(_path + " ");
     }
 
     public void TreeList(int depth)
     {
         if (_directory is not null) BuildTree(_directory, depth, 0);
+        Console.Write(_path + " ");
     }
 
     public void FileShow(string path)
     {
-        if (!IsPathExists(path)) return;
-        string fullPath = _path + '/' + path;
-        Console.WriteLine(File.ReadAllText(fullPath));
+        string currentPath = HandlePath(path);
+
+        Console.WriteLine(File.ReadAllText(currentPath));
+
+        Console.Write(_path + " ");
     }
 
     public void FileMove(string sourcePath, string destinationPath)
     {
-        _file = new FileInfo(sourcePath);
+        string currentSourcePath = HandlePath(sourcePath);
+        string currentDestinationPath = HandlePath(destinationPath);
+        _file = new FileInfo(currentSourcePath);
+
         if (_file.Exists)
         {
-            _file.MoveTo(destinationPath + '/' + _file.Name);
+            _file.MoveTo(currentDestinationPath + '/' + _file.Name);
+            Console.Write(_path + " ");
         }
     }
 
     public void FileCopy(string sourcePath, string destinationPath)
     {
-        _file = new FileInfo(sourcePath);
+        string currentSourcePath = HandlePath(sourcePath);
+        string currentDestinationPath = HandlePath(destinationPath);
+        _file = new FileInfo(currentSourcePath);
+
         if (_file.Exists)
         {
-            _file.CopyTo(destinationPath);
+            _file.CopyTo(currentDestinationPath + '/' + _file.Name);
+            Console.Write(_path + " ");
         }
     }
 
     public void FileDelete(string path)
     {
-        _file = new FileInfo(path);
+        string currentPath = HandlePath(path);
+        _file = new FileInfo(currentPath);
         if (_file.Exists)
         {
             _file.Delete();
+            Console.Write(_path + " ");
         }
     }
 
     public void FileRename(string path, string newName)
     {
-        _file = new FileInfo(path);
+        string currentPath = HandlePath(path);
+        _file = new FileInfo(currentPath);
+
         if (_file.Exists)
         {
-            File.Move(_file.Name, newName);
+            _file.MoveTo(_file.DirectoryName + '/' + newName);
+            Console.Write(_path + " ");
         }
     }
 
@@ -103,6 +124,20 @@ public class LocalFileSystem : IFileSystem, IRootedPath
 
     public bool IsPathExists(string path)
     {
-        return Directory.Exists(_path + '/' + path);
+        if (path is null) throw new ArgumentNullException(nameof(path));
+        string[] s = path.Split('/');
+        string newDirectory = s[0];
+        if (!path.Contains('/', StringComparison.Ordinal)) return File.Exists(_path + '/' + path);
+        return Directory.Exists(_path + '/' + newDirectory);
+    }
+
+    public string HandlePath(string path)
+    {
+        if (!IsRooted(path) && IsPathExists(path))
+        {
+            return _path + '/' + path;
+        }
+
+        return path;
     }
 }
