@@ -8,7 +8,7 @@ public class TreeListHandler : CommandHandler, IParse
 {
     private int _depth;
     private string _flag = string.Empty;
-
+    public Request? CurrentRequest { get; private set; }
     public void Parse(Iterator iterator)
     {
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
@@ -16,6 +16,11 @@ public class TreeListHandler : CommandHandler, IParse
         _flag = iterator.Current();
         iterator.GoNext();
         _depth = int.Parse(iterator.Current(), new NumberFormatInfo());
+        if (CurrentRequest is not null)
+        {
+            CurrentRequest.Flag = _flag;
+            CurrentRequest.Depth = _depth;
+        }
     }
 
     public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
@@ -26,6 +31,8 @@ public class TreeListHandler : CommandHandler, IParse
         }
         else
         {
+            CurrentRequest = currentRequest;
+            CurrentRequest.CurrentHandler = new TreeListHandler();
             Parse(iterator);
             fileSystem?.TreeList(_depth);
         }

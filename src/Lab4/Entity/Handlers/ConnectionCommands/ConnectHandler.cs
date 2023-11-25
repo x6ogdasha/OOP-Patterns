@@ -8,6 +8,7 @@ public class ConnectHandler : CommandHandler, IParse, ISetMode
     private string _address = string.Empty;
     private string _flag = string.Empty;
     private string _mode = string.Empty;
+    public Request? CurrentRequest { get; private set; }
     public void Parse(Iterator iterator)
     {
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
@@ -18,6 +19,12 @@ public class ConnectHandler : CommandHandler, IParse, ISetMode
         _flag = iterator.Current();
         iterator.GoNext();
         _mode = iterator.Current();
+        if (CurrentRequest is not null)
+        {
+            CurrentRequest.Flag = _flag;
+            CurrentRequest.Mode = _mode;
+            CurrentRequest.FirstPath = _address;
+        }
     }
 
     public IFileSystem? SetMode()
@@ -43,6 +50,8 @@ public class ConnectHandler : CommandHandler, IParse, ISetMode
         }
         else
         {
+            CurrentRequest = currentRequest;
+            CurrentRequest.CurrentHandler = new ConnectHandler();
             Parse(iterator);
             fileSystem = SetMode();
             fileSystem?.Connect(_address);
