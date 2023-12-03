@@ -1,25 +1,26 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
+using Itmo.ObjectOrientedProgramming.Lab4.Service;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.ConnectionCommands;
 
 public class DisconnectHandler : CommandHandler
 {
-    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
+    public override void Handle(Iterator iterator, ref SystemContext system)
     {
-        if (CanHandle(currentRequest))
+        if (CanHandle(iterator))
         {
-            fileSystem?.Disconnect();
+            system?.FileSystem?.Disconnect();
         }
         else
         {
-            base.Handle(currentRequest, iterator, ref fileSystem);
+            base.Handle(iterator, ref system);
         }
     }
 
-    protected override bool CanHandle(Request currentRequest)
+    protected override bool CanHandle(Iterator iterator)
     {
-        if (currentRequest is null) throw new ArgumentNullException(nameof(currentRequest));
-        return currentRequest.RequestText == "disconnect";
+        if (iterator is null) throw new ArgumentNullException(nameof(iterator));
+
+        return iterator.Current() == "disconnect";
     }
 }

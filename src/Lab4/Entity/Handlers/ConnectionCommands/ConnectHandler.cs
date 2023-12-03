@@ -1,67 +1,52 @@
 using System;
+using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.Flags;
 using Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
+using Itmo.ObjectOrientedProgramming.Lab4.Service;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.ConnectionCommands;
 
-public class ConnectHandler : CommandHandler, IParse, ISetMode
+public class ConnectHandler : CommandHandler, IParse
 {
-    private string _address = string.Empty;
-    private string _flag = string.Empty;
-    private string _mode = string.Empty;
-    public Request? CurrentRequest { get; private set; }
-    public void Parse(Iterator iterator)
+    private Dictionary<string, string> _flags = new Dictionary<string, string>()
+    {
+        { "-m", string.Empty },
+    };
+    public string Address { get; private set; } = string.Empty;
+    public void Parse(Iterator iterator, ref SystemContext system)
     {
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
 
         iterator.GoNext();
-        _address = iterator.Current();
+        Address = iterator.Current();
         iterator.GoNext();
-        _flag = iterator.Current();
-        iterator.GoNext();
-        _mode = iterator.Current();
-        if (CurrentRequest is not null)
-        {
-            CurrentRequest.Flag = _flag;
-            CurrentRequest.Mode = _mode;
-            CurrentRequest.FirstPath = _address;
-        }
+
+        FlagHandler modeHandler = new ModeHandler();
+        var chainOfFlags = new CreateChainOfFlags(modeHandler);
+        chainOfFlags.Create();
+        modeHandler.Handle(iterator, _flags, ref system);
     }
 
-    public IFileSystem? SetMode()
+    public override void Handle(Iterator iterator, ref SystemContext system)
     {
-        if (_mode == "local")
-        {
-            return new LocalFileSystem();
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
-    {
-        if (currentRequest is null) throw new ArgumentNullException(nameof(currentRequest));
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
 
-        if (!CanHandle(currentRequest))
+        if (!CanHandle(iterator))
         {
-            base.Handle(currentRequest, iterator, ref fileSystem);
+            base.Handle(iterator, ref system);
         }
         else
         {
-            CurrentRequest = currentRequest;
-            CurrentRequest.CurrentHandler = new ConnectHandler();
-            Parse(iterator);
-            fileSystem = SetMode();
-            fileSystem?.Connect(_address);
+            Parse(iterator, ref system);
+            system.LastHandler = new ConnectHandler();
+            system.FileSystem?.Connect(Address);
         }
     }
 
-    protected override bool CanHandle(Request currentRequest)
+    protected override bool CanHandle(Iterator iterator)
     {
-        if (currentRequest is null) throw new ArgumentNullException(nameof(currentRequest));
+        if (iterator is null) throw new ArgumentNullException(nameof(iterator));
 
-        return currentRequest.RequestText == "connect";
+        return iterator.Current() == "connect";
     }
 }

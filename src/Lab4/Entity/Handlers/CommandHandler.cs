@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
+using Itmo.ObjectOrientedProgramming.Lab4.Service;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers;
 
@@ -11,10 +11,10 @@ public abstract class CommandHandler
         return NextHandler;
     }
 
-    public virtual void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
+    public virtual void Handle(Iterator iterator, ref SystemContext system)
     {
-        NextHandler?.Handle(currentRequest, iterator, ref fileSystem);
+        NextHandler?.Handle(iterator, ref system);
     }
 
-    protected abstract bool CanHandle(Request currentRequest);
+    protected abstract bool CanHandle(Iterator iterator);
 }

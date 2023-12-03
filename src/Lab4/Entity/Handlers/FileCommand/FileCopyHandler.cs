@@ -1,38 +1,42 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
+using Itmo.ObjectOrientedProgramming.Lab4.Service;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.FileCommand;
 
 public class FileCopyHandler : CommandHandler, IParse
 {
-    private string _sourcePath = string.Empty;
-    private string _destinationPath = string.Empty;
+    public string SourcePath { get; private set; } = string.Empty;
+    public string DestinationPath { get; private set; } = string.Empty;
 
-    public void Parse(Iterator iterator)
+    public void Parse(Iterator iterator, ref SystemContext system)
     {
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
         iterator.GoNext();
-        _sourcePath = iterator.Current();
+        SourcePath = iterator.Current();
         iterator.GoNext();
-        _destinationPath = iterator.Current();
+        DestinationPath = iterator.Current();
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
+    public override void Handle(Iterator iterator, ref SystemContext system)
     {
-        if (!CanHandle(currentRequest))
+        if (!CanHandle(iterator))
         {
-            base.Handle(currentRequest, iterator, ref fileSystem);
+            base.Handle(iterator, ref system);
         }
         else
         {
-            Parse(iterator);
-            fileSystem?.FileCopy(_sourcePath, _destinationPath);
+            Parse(iterator, ref system);
+            if (system is null) return;
+            system.LastHandler = new FileCopyHandler();
+            system.FileSystem?.FileCopy(SourcePath, DestinationPath);
         }
     }
 
-    protected override bool CanHandle(Request currentRequest)
+    protected override bool CanHandle(Iterator iterator)
     {
-        if (currentRequest is null) throw new ArgumentNullException(nameof(currentRequest));
-        return currentRequest.RequestText == "copy";
+        if (iterator is null) throw new ArgumentNullException(nameof(iterator));
+
+        return iterator.Current() == "copy";
     }
 }

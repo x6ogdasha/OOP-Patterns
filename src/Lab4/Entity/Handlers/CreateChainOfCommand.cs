@@ -1,19 +1,22 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.ConnectionCommands;
 using Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.FileCommand;
 using Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.TreeCommand;
-using Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers;
 
-public class CreateChain : ICreateChain
+public class CreateChainOfCommand
 {
-    public void Create(CommandHandler handler)
+    public CreateChainOfCommand(CommandHandler handler)
     {
-        if (handler is null) throw new ArgumentNullException(nameof(handler));
+        Handler = handler;
+    }
+
+    public CommandHandler Handler { get; set; }
+    public void Create()
+    {
         CommandHandler treeHandler = new TreeHandler();
         CommandHandler fileHandler = new FileHandler();
         CommandHandler disconnectHandler = new DisconnectHandler();
-        handler.SetNext(treeHandler).SetNext(fileHandler).SetNext(disconnectHandler);
+        Handler.SetNext(treeHandler).SetNext(fileHandler).SetNext(disconnectHandler);
     }
 }

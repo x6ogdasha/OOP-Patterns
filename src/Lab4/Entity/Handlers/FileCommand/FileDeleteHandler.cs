@@ -1,35 +1,39 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
+using Itmo.ObjectOrientedProgramming.Lab4.Service;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.FileCommand;
 
 public class FileDeleteHandler : CommandHandler, IParse
 {
-    private string _path = string.Empty;
+    public string Path { get; private set; } = string.Empty;
 
-    public void Parse(Iterator iterator)
+    public void Parse(Iterator iterator, ref SystemContext system)
     {
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
         iterator.GoNext();
-        _path = iterator.Current();
+        Path = iterator.Current();
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
+    public override void Handle(Iterator iterator, ref SystemContext system)
     {
-        if (!CanHandle(currentRequest))
+        if (system is null) throw new ArgumentNullException(nameof(system));
+        if (!CanHandle(iterator))
         {
-            base.Handle(currentRequest, iterator, ref fileSystem);
+            base.Handle(iterator, ref system);
         }
         else
         {
-            Parse(iterator);
-            fileSystem?.FileDelete(_path);
+            Parse(iterator, ref system);
+            system.LastHandler = new FileDeleteHandler();
+            system.FileSystem?.FileDelete(Path);
         }
     }
 
-    protected override bool CanHandle(Request currentRequest)
+    protected override bool CanHandle(Iterator iterator)
     {
-        if (currentRequest is null) throw new ArgumentNullException(nameof(currentRequest));
-        return currentRequest.RequestText == "delete";
+        if (iterator is null) throw new ArgumentNullException(nameof(iterator));
+
+        return iterator.Current() == "delete";
     }
 }

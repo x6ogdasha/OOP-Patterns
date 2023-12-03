@@ -1,45 +1,42 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
+using Itmo.ObjectOrientedProgramming.Lab4.Service;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.FileCommand;
 
 public class FileMoveHandler : CommandHandler, IParse
 {
-    private string _sourcePath = string.Empty;
-    private string _destinationPath = string.Empty;
-    public Request? CurrentRequest { get; private set; }
-    public void Parse(Iterator iterator)
+    public string SourcePath { get; private set; } = string.Empty;
+    public string DestinationPath { get; private set; } = string.Empty;
+    public Request CurrentRequest { get; private set; } = new Request();
+    public void Parse(Iterator iterator, ref SystemContext system)
     {
         if (iterator is null) throw new ArgumentNullException(nameof(iterator));
         iterator.GoNext();
-        _sourcePath = iterator.Current();
+        SourcePath = iterator.Current();
         iterator.GoNext();
-        _destinationPath = iterator.Current();
-        if (CurrentRequest is not null)
-        {
-            CurrentRequest.FirstPath = _sourcePath;
-            CurrentRequest.SecondPath = _destinationPath;
-        }
+        DestinationPath = iterator.Current();
     }
 
-    public override void Handle(Request currentRequest, Iterator iterator, ref IFileSystem? fileSystem)
+    public override void Handle(Iterator iterator, ref SystemContext system)
     {
-        if (!CanHandle(currentRequest))
+        if (system is null) throw new ArgumentNullException(nameof(system));
+        if (!CanHandle(iterator))
         {
-            base.Handle(currentRequest, iterator, ref fileSystem);
+            base.Handle(iterator, ref system);
         }
         else
         {
-            CurrentRequest = currentRequest;
-            CurrentRequest.CurrentHandler = new FileMoveHandler();
-            Parse(iterator);
-            fileSystem?.FileMove(_sourcePath, _destinationPath);
+            Parse(iterator, ref system);
+            system.LastHandler = new FileMoveHandler();
+            system.FileSystem?.FileMove(SourcePath, DestinationPath);
         }
     }
 
-    protected override bool CanHandle(Request currentRequest)
+    protected override bool CanHandle(Iterator iterator)
     {
-        if (currentRequest is null) throw new ArgumentNullException(nameof(currentRequest));
-        return currentRequest.RequestText == "move";
+        if (iterator is null) throw new ArgumentNullException(nameof(iterator));
+
+        return iterator.Current() == "move";
     }
 }

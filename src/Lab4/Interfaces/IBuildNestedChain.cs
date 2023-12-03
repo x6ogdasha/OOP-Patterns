@@ -4,5 +4,5 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
 
 public interface IBuildNestedChain
 {
-    public void BuildNestedChain(Request currentRequest, Iterator iterator);
+    public void BuildNestedChain(Iterator iterator);
 }

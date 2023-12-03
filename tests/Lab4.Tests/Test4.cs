@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers;
 using Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.ConnectionCommands;
 using Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.FileCommand;
 using Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.TreeCommand;
-using Itmo.ObjectOrientedProgramming.Lab4.Interfaces;
+using Itmo.ObjectOrientedProgramming.Lab4.Service;
 using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Tests;
@@ -13,55 +13,45 @@ public class Test4
     [Fact]
     public void TestConnecting()
     {
-        CommandHandler connectHandler = new ConnectHandler();
-        CreateChain createChain = new();
-        createChain.Create(connectHandler);
-        IFileSystem? fileSystem = null;
+        var connectHandler = new ConnectHandler();
+        CreateChainOfCommand createChainOfCommand = new(connectHandler);
+        createChainOfCommand.Create();
+        var system = new SystemContext();
 
         string command = "connect /Users/6ogdasha/Desktop/Богдан/ИТМО -m local";
         var iterator = new Iterator(command);
-        var request = new Request(iterator.Current());
-        connectHandler.Handle(request, iterator, ref fileSystem);
+        connectHandler.Handle(iterator, ref system);
 
-        Assert.Equal("/Users/6ogdasha/Desktop/Богдан/ИТМО", request.FirstPath);
-        Assert.Equal("-m", request.Flag);
-        Assert.Equal("local", request.Mode);
-        Assert.True(request.CurrentHandler is ConnectHandler);
+        Assert.Equal("/Users/6ogdasha/Desktop/Богдан/ИТМО", connectHandler.Address);
+        Assert.True(system?.LastHandler is ConnectHandler);
     }
 
     [Fact]
     public void TestFileMove()
     {
         CommandHandler connectHandler = new ConnectHandler();
-        CreateChain createChain = new();
-        createChain.Create(connectHandler);
-        IFileSystem? fileSystem = null;
+        CreateChainOfCommand createChainOfCommand = new(connectHandler);
+        createChainOfCommand.Create();
+        var system = new SystemContext();
+        system.FileSystem = new LocalFileSystem();
 
         string command = "file move /Users/6ogdasha/Desktop/Богдан/ИТМО /Users/6ogdasha/Desktop/Богдан/ИТМО/БД";
         var iterator = new Iterator(command);
-        var request = new Request(iterator.Current());
-        connectHandler.Handle(request, iterator, ref fileSystem);
-
-        Assert.Equal("/Users/6ogdasha/Desktop/Богдан/ИТМО", request.FirstPath);
-        Assert.Equal("/Users/6ogdasha/Desktop/Богдан/ИТМО/БД", request.SecondPath);
-        Assert.True(request.CurrentHandler is FileMoveHandler);
+        connectHandler.Handle(iterator, ref system);
+        Assert.True(system?.LastHandler is FileMoveHandler);
     }
 
     [Fact]
     public void TestTreeList()
     {
         CommandHandler connectHandler = new ConnectHandler();
-        CreateChain createChain = new();
-        createChain.Create(connectHandler);
-        IFileSystem? fileSystem = null;
+        CreateChainOfCommand createChainOfCommand = new(connectHandler);
+        createChainOfCommand.Create();
+        var system = new SystemContext();
 
         string command = "tree list -d 5";
         var iterator = new Iterator(command);
-        var request = new Request(iterator.Current());
-        connectHandler.Handle(request, iterator, ref fileSystem);
-
-        Assert.Equal("-d", request.Flag);
-        Assert.Equal(5, request.Depth);
-        Assert.True(request.CurrentHandler is TreeListHandler);
+        connectHandler.Handle(iterator, ref system);
+        Assert.True(system?.LastHandler is TreeListHandler);
     }
 }
