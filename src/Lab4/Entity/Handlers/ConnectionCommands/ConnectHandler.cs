@@ -8,7 +8,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Entity.Handlers.ConnectionCommands
 
 public class ConnectHandler : CommandHandler, IParse
 {
-    private Dictionary<string, string> _flags = new Dictionary<string, string>()
+    private Dictionary<string, string> _flags = new()
     {
         { "-m", string.Empty },
     };
