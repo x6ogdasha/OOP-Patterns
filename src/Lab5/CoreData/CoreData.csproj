@@ -8,4 +8,11 @@
 
 
 
+    <ItemGroup>
+      <PackageReference Include="Npgsql" />
+    </ItemGroup>
+
+
+
+
 </Project>
