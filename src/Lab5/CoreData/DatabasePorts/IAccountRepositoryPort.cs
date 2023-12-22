@@ -4,6 +4,6 @@ namespace CoreData.DatabasePorts;
 
 public interface IAccountRepositoryPort
 {
-    public IList<Account>? FindById(int accountId);
+    public Account? FindById(int accountId);
     public void UpdateMoney(int accountId, decimal money);
 }

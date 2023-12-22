@@ -14,7 +14,7 @@ public class AdminAdapter : IAdminPort
         throw new NotImplementedException();
     }
 
-    public void CreateUser(int id, string name, UserRole role)
+    public void CreateUser(int id, string name, int password, UserRole role)
     {
         throw new NotImplementedException();
     }

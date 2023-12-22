@@ -6,9 +6,8 @@ namespace Adapters.DataBaseAdapters;
 
 public class AccountRepositoryAdapter : IAccountRepositoryPort
 {
-    public IList<Account>? FindById(int accountId)
+    public Account? FindById(int accountId)
     {
-        IList<Account> result = new List<Account>();
         const string sql = """
                            select Name
                            from "Schema"."Accounts"
@@ -28,15 +27,11 @@ public class AccountRepositoryAdapter : IAccountRepositoryPort
         command.Parameters.AddWithValue("accountId", accountId);
 
         using NpgsqlDataReader reader = command.ExecuteReader();
-        while (reader.Read())
-        {
-            int currentAccountId = reader.GetInt32(0);
-            decimal currentMoney = reader.GetInt32(1);
-            int currentUserId = reader.GetInt32(2);
-            result.Add(new Account(currentAccountId, currentMoney, currentUserId));
-        }
+        int currentAccountId = reader.GetInt32(0);
+        decimal currentMoney = reader.GetInt32(1);
+        int currentUserId = reader.GetInt32(2);
 
-        return result;
+        return new Account(currentAccountId, currentMoney, currentUserId);
     }
 
     public void UpdateMoney(int accountId, decimal money)
