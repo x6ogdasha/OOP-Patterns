@@ -6,12 +6,12 @@ namespace Adapters.DataBaseAdapters;
 
 public class AccountRepositoryAdapter : IAccountRepositoryPort
 {
-    public Account? FindById(int accountId)
+    public Account? FindById(int userId)
     {
         const string sql = """
-                           select Name
+                           select AccountID, Money, UserID
                            from "Schema"."Accounts"
-                           where AccountID = @accountId
+                           where UserID = @userId
                            """;
         using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
         {
@@ -24,7 +24,7 @@ public class AccountRepositoryAdapter : IAccountRepositoryPort
         connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
-        command.Parameters.AddWithValue("accountId", accountId);
+        command.Parameters.AddWithValue("userId", userId);
 
         using NpgsqlDataReader reader = command.ExecuteReader();
         int currentAccountId = reader.GetInt32(0);

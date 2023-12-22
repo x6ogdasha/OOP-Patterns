@@ -21,7 +21,7 @@ public class AdminAdapter : IAdminPort
     {
         if (user is not null)
         {
-            Account? account = _accountRepository.FindById(user.AccountId);
+            Account? account = _accountRepository.FindById(user.Id);
             return account?.Money ?? 0;
         }
 

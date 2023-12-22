@@ -22,13 +22,13 @@ public class UserAdapter : IUserPort
 
     public decimal ShowBalance()
     {
-        Account? account = _accountRepository.FindById(_user.AccountId);
+        Account? account = _accountRepository.FindById(_user.Id);
         return account?.Money ?? 0;
     }
 
     public void WithdrawMoney(decimal money)
     {
-        Account? account = _accountRepository.FindById(_user.AccountId);
+        Account? account = _accountRepository.FindById(_user.Id);
         if (account is not null && account.Money - money < 0) throw new NotEnoughMoneyException();
 
         if (account is not null)
@@ -41,7 +41,7 @@ public class UserAdapter : IUserPort
 
     public void AddCash(decimal money)
     {
-        Account? account = _accountRepository.FindById(_user.AccountId);
+        Account? account = _accountRepository.FindById(_user.Id);
         if (account is null) return;
         account.Money += money;
         _accountRepository.UpdateMoney(account.AccountId, account.Money);
@@ -50,6 +50,11 @@ public class UserAdapter : IUserPort
 
     public void ShowHistory()
     {
-        throw new NotImplementedException();
+        IList<MyTransaction> transactions = _historyRepository.GetTransactionHistory(_user.Id);
+
+        foreach (MyTransaction transaction in transactions)
+        {
+            transaction.Show();
+        }
     }
 }
