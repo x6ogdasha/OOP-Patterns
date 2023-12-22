@@ -1,12 +1,31 @@
 using CoreData;
+using CoreData.DatabasePorts;
+using CoreData.Entity;
 
-namespace Adapters;
+namespace Adapters.EntityAdapters;
 
 public class AdminAdapter : IAdminPort
 {
-    public void ShowBalance(User user)
+    private readonly IAccountRepositoryPort _accountRepository;
+    private readonly IUserRepositoryPort _userRepository;
+    private readonly IHistoryRepository _historyRepository;
+
+    public AdminAdapter(IUserRepositoryPort userRepository, IAccountRepositoryPort accountRepository, IHistoryRepository historyRepository)
     {
-        throw new NotImplementedException();
+        _accountRepository = accountRepository;
+        _userRepository = userRepository;
+        _historyRepository = historyRepository;
+    }
+
+    public decimal ShowBalance(User user)
+    {
+        if (user is not null)
+        {
+            Account? account = _accountRepository.FindById(user.AccountId);
+            return account?.Money ?? 0;
+        }
+
+        return 0;
     }
 
     public void ShowHistory(User user)
@@ -14,8 +33,10 @@ public class AdminAdapter : IAdminPort
         throw new NotImplementedException();
     }
 
-    public void CreateUser(int id, string name, int password, UserRole role)
+    public void CreateUser(string name, int password, UserRole role)
     {
-        throw new NotImplementedException();
+        _userRepository.AddNewUser(name, role, password);
+        int lastUserId = _userRepository.FindLastUserId();
+        _accountRepository.CreateAccount(0, lastUserId);
     }
 }

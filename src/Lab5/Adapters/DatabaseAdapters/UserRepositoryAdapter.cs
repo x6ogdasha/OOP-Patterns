@@ -9,7 +9,7 @@ public class UserRepositoryAdapter : IUserRepositoryPort
     public User? FindById(int id)
     {
         const string sql = """
-                           select Name
+                           select Name, UserId, Password
                            from "Schema"."Users"
                            where UserID = @accountId
                            """;
@@ -55,5 +55,30 @@ public class UserRepositoryAdapter : IUserRepositoryPort
         command.Parameters.AddWithValue("name", name);
         command.Parameters.AddWithValue("role", role);
         command.Parameters.AddWithValue("password", password);
+    }
+
+    public int FindLastUserId()
+    {
+        const string sql = """
+                           select UserId
+                           from "Schema".Users
+                           where UserId = MAX(UserId)
+                           """;
+        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
+        {
+            Host = "localhost",
+            Port = 5432,
+            Username = "postgres",
+            Password = "123456",
+            SslMode = SslMode.Prefer,
+        }.ConnectionString);
+        connection.Open();
+
+        using var command = new NpgsqlCommand(sql, connection);
+
+        using NpgsqlDataReader reader = command.ExecuteReader();
+        int userId = reader.GetInt32(1);
+
+        return userId;
     }
 }
