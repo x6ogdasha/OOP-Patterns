@@ -11,15 +11,15 @@ public class AccountRepositoryAdapter : IAccountRepositoryPort
         IList<Account> result = new List<Account>();
         const string sql = """
                            select Name
-                           from Users
-                           where UserID = @accountId
+                           from "Schema"."Accounts"
+                           where AccountID = @accountId
                            """;
         using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
         {
             Host = "localhost",
             Port = 5432,
             Username = "postgres",
-            Password = "123456",
+            Password = "12345",
             SslMode = SslMode.Prefer,
         }.ConnectionString);
         connection.Open();
@@ -42,7 +42,7 @@ public class AccountRepositoryAdapter : IAccountRepositoryPort
     public void UpdateMoney(int accountId, decimal money)
     {
         const string sql = """
-                           update Accounts
+                           update "Schema".Accounts
                            set Money = @money
                            where AccountId = @accountId
                            """;
@@ -51,7 +51,7 @@ public class AccountRepositoryAdapter : IAccountRepositoryPort
             Host = "localhost",
             Port = 5432,
             Username = "postgres",
-            Password = "123456",
+            Password = "12345",
             SslMode = SslMode.Prefer,
         }.ConnectionString);
         connection.Open();

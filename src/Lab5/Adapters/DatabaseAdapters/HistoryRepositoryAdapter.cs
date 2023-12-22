@@ -8,7 +8,7 @@ public class HistoryRepositoryAdapter : IHistoryRepository
     public void AddOperation(int accountId, string operationType, decimal currentMoney)
     {
         const string sql = """
-                           insert into History
+                           insert into "Schema"History
                            values (@accountId, @operationType, @currentMoney)
                            """;
         using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
