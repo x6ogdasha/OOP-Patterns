@@ -1,7 +1,9 @@
+using CoreData.Entity;
+
 namespace CoreData.DatabasePorts;
 
 public interface IAccountRepositoryPort
 {
-    public void FindByNumber(int number);
-    public void UpdateMoney(decimal money);
+    public IList<Account>? FindById(int accountId);
+    public void UpdateMoney(int accountId, decimal money);
 }
