@@ -55,4 +55,25 @@ public class AccountRepositoryAdapter : IAccountRepositoryPort
         command.Parameters.AddWithValue("accountId", accountId);
         command.Parameters.AddWithValue("money", money);
     }
+
+    public void CreateAccount(decimal money, int userId)
+    {
+        const string sql = """
+                           insert into "Schema".Accounts ("Money", "UserID")
+                           values (@money, @userId)
+                           """;
+        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
+        {
+            Host = "localhost",
+            Port = 5432,
+            Username = "postgres",
+            Password = "123456",
+            SslMode = SslMode.Prefer,
+        }.ConnectionString);
+        connection.Open();
+
+        using var command = new NpgsqlCommand(sql, connection);
+        command.Parameters.AddWithValue("money", money);
+        command.Parameters.AddWithValue("userId", userId);
+    }
 }
