@@ -35,8 +35,8 @@ public class UserAdapter : IUserPort
         if (account is not null)
         {
             account.Money -= money;
-            _accountRepository.UpdateMoney(account.AccountId, account.Money);
-            _historyRepository.AddOperation(account.AccountId, "-", account.Money);
+            _accountRepository.UpdateMoney(account.UserId, account.Money);
+            _historyRepository.AddOperation(account.UserId, "-", account.Money);
         }
     }
 
@@ -46,8 +46,8 @@ public class UserAdapter : IUserPort
         Account? account = _accountRepository.FindById(_user.Id);
         if (account is null) return;
         account.Money += money;
-        _accountRepository.UpdateMoney(account.AccountId, account.Money);
-        _historyRepository.AddOperation(account.AccountId, "+", account.Money);
+        _accountRepository.UpdateMoney(account.UserId, account.Money);
+        _historyRepository.AddOperation(account.UserId, "+", account.Money);
     }
 
     public void ShowHistory()

@@ -23,7 +23,14 @@ public class ScenarioRunner
         {
             Console.WriteLine("Waiting for command: ");
             startCommand = Console.ReadLine();
-            if (startCommand is not null) _scenarioChain.Handle(startCommand, _userService, _adminService);
+            if (startCommand is not null)
+            {
+                _scenarioChain.Handle(startCommand, _userService, _adminService);
+            }
+            else
+            {
+                Console.WriteLine(5);
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ public class HistoryRepositoryAdapter : IHistoryRepository
     public void AddOperation(int accountId, string operationType, decimal currentMoney)
     {
         const string sql = """
-                           insert into "Schema".History
+                           insert into "Bank"."History"
                            values (@accountId, @operationType, @currentMoney)
                            """;
         using var connection = new NpgsqlConnection(ConnectionInfo);
@@ -30,9 +30,9 @@ public class HistoryRepositoryAdapter : IHistoryRepository
     {
         IList<MyTransaction> result = new List<MyTransaction>();
         const string sql = """
-                           select AccountID, CurrentMoney, OperationType
-                           from "Schema"."History"
-                           where UserID = @userId
+                           select "AccountID", "CurrentMoney", "OperationType"
+                           from "Bank"."History"
+                           where "UserID" = @userId
                            """;
         using var connection = new NpgsqlConnection(ConnectionInfo);
         connection.Open();

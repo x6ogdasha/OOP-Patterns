@@ -17,6 +17,6 @@ public class UserBalanceScenario : BaseScenario
 
     public override void Run(IUserPort userService, IAdminPort adminService)
     {
-        userService?.ShowBalance();
+        Console.WriteLine(userService?.ShowBalance());
     }
 }

@@ -21,6 +21,14 @@ public class WithdrawScenario : BaseScenario
     {
         string? moneyString = Console.ReadLine();
         decimal money = _service.ParsePassword(moneyString);
-        userService?.WithdrawMoney(money);
+        try
+        {
+            userService?.WithdrawMoney(money);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Not enough money");
+            throw;
+        }
     }
 }

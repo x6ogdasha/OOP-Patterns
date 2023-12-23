@@ -15,6 +15,7 @@ public static class Program
         {
             Host = "localhost",
             Port = 5432,
+            Database = "MyDataBase",
             Username = "postgres",
             Password = "12345",
             SslMode = SslMode.Prefer,
@@ -27,7 +28,8 @@ public static class Program
         IUserPort userService = new UserAdapter(userRepository, accountRepository, historyRepository);
         IAdminPort adminService = new AdminAdapter(userRepository, accountRepository, historyRepository, 1111);
 
-        BaseScenario chainOfScenario = new LoginScenario(userService, adminService).SetNext(new AddCashScenario())
+        BaseScenario chainOfScenario = new LoginScenario(userService, adminService);
+        chainOfScenario.SetNext(new AddCashScenario())
             .SetNext(new AdminBalanceScenario())
             .SetNext(new AdminShowHistoryScenario())
             .SetNext(new CreateAccountScenario())

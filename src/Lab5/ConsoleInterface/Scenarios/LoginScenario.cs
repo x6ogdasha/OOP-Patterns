@@ -31,16 +31,19 @@ public class LoginScenario : BaseScenario
     {
         Console.WriteLine("Enter Id: ");
         string? idString = Console.ReadLine();
+        if (idString == "Admin")
+        {
+            Console.WriteLine("Enter Password: ");
+            string? adminPassword = Console.ReadLine();
+            int admin = _service.ParsePassword(adminPassword);
+            adminService?.CheckForPermissions(admin);
+            return;
+        }
 
         int id = _service.ParsePassword(idString);
         Console.WriteLine("Enter Password: ");
         string? passwordString = Console.ReadLine();
         int password = _service.ParsePassword(passwordString);
-
-        if (idString == "Admin")
-        {
-            adminService?.CheckForPermissions(password);
-        }
 
         LoginResult result = _userService.Login(id, password);
 
