@@ -6,6 +6,12 @@ namespace Adapters.DataBaseAdapters;
 
 public class UserRepositoryAdapter : IUserRepositoryPort
 {
+    public UserRepositoryAdapter(string connectionInfo)
+    {
+        ConnectionInfo = connectionInfo;
+    }
+
+    public string ConnectionInfo { get; private set; }
     public User? FindById(int id)
     {
         const string sql = """
@@ -13,14 +19,7 @@ public class UserRepositoryAdapter : IUserRepositoryPort
                            from "Schema"."Users"
                            where UserID = @accountId
                            """;
-        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
-        {
-            Host = "localhost",
-            Port = 5432,
-            Username = "postgres",
-            Password = "12345",
-            SslMode = SslMode.Prefer,
-        }.ConnectionString);
+        using var connection = new NpgsqlConnection(ConnectionInfo);
         connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
@@ -41,14 +40,7 @@ public class UserRepositoryAdapter : IUserRepositoryPort
                            insert into "Schema".Users
                            values (@name, @role, @password)
                            """;
-        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
-        {
-            Host = "localhost",
-            Port = 5432,
-            Username = "postgres",
-            Password = "123456",
-            SslMode = SslMode.Prefer,
-        }.ConnectionString);
+        using var connection = new NpgsqlConnection(ConnectionInfo);
         connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
@@ -64,14 +56,7 @@ public class UserRepositoryAdapter : IUserRepositoryPort
                            from "Schema".Users
                            where UserId = MAX(UserId)
                            """;
-        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
-        {
-            Host = "localhost",
-            Port = 5432,
-            Username = "postgres",
-            Password = "123456",
-            SslMode = SslMode.Prefer,
-        }.ConnectionString);
+        using var connection = new NpgsqlConnection(ConnectionInfo);
         connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
@@ -80,5 +65,23 @@ public class UserRepositoryAdapter : IUserRepositoryPort
         int userId = reader.GetInt32(1);
 
         return userId;
+    }
+
+    public string? GetRoleById(int id)
+    {
+        const string sql = """
+                           select Role
+                           from "Schema".Users
+                           where UserId = @id
+                           """;
+        using var connection = new NpgsqlConnection(ConnectionInfo);
+        connection.Open();
+
+        using var command = new NpgsqlCommand(sql, connection);
+        command.Parameters.AddWithValue("id", id);
+        using NpgsqlDataReader reader = command.ExecuteReader();
+        string userRole = reader.GetString(0);
+
+        return userRole;
     }
 }

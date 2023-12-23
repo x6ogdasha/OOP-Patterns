@@ -6,20 +6,19 @@ namespace Adapters.DataBaseAdapters;
 
 public class HistoryRepositoryAdapter : IHistoryRepository
 {
+    public HistoryRepositoryAdapter(string connectionInfo)
+    {
+        ConnectionInfo = connectionInfo;
+    }
+
+    public string ConnectionInfo { get; private set; }
     public void AddOperation(int accountId, string operationType, decimal currentMoney)
     {
         const string sql = """
                            insert into "Schema".History
                            values (@accountId, @operationType, @currentMoney)
                            """;
-        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
-        {
-            Host = "localhost",
-            Port = 5432,
-            Username = "postgres",
-            Password = "123456",
-            SslMode = SslMode.Prefer,
-        }.ConnectionString);
+        using var connection = new NpgsqlConnection(ConnectionInfo);
         connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
@@ -35,14 +34,7 @@ public class HistoryRepositoryAdapter : IHistoryRepository
                            from "Schema"."History"
                            where UserID = @userId
                            """;
-        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
-        {
-            Host = "localhost",
-            Port = 5432,
-            Username = "postgres",
-            Password = "12345",
-            SslMode = SslMode.Prefer,
-        }.ConnectionString);
+        using var connection = new NpgsqlConnection(ConnectionInfo);
         connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);

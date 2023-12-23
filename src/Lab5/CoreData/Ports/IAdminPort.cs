@@ -2,7 +2,8 @@ namespace CoreData;
 
 public interface IAdminPort
 {
-    public decimal ShowBalance(User user);
-    public void ShowHistory(User user);
+    public decimal ShowBalance(int id);
+    public void ShowHistory(int id);
     public void CreateUser(string name, int password, UserRole role);
+    public void CheckForPermissions(int password);
 }

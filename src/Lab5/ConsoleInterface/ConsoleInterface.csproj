@@ -6,21 +6,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-
-
     <ItemGroup>
-      <PackageReference Include="Itmo.Dev.Platform.Postgres" />
-      <PackageReference Include="Npgsql" />
-
-
-
+      <ProjectReference Include="..\Adapters\Adapters.csproj" />
+      <ProjectReference Include="..\CoreData\CoreData.csproj" />
     </ItemGroup>
-
-
-
-
-
-
 
 
 

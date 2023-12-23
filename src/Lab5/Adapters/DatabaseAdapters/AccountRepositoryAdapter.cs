@@ -6,6 +6,12 @@ namespace Adapters.DataBaseAdapters;
 
 public class AccountRepositoryAdapter : IAccountRepositoryPort
 {
+    public AccountRepositoryAdapter(string connectionInfo)
+    {
+        ConnectionInfo = connectionInfo;
+    }
+
+    public string ConnectionInfo { get; private set; }
     public Account? FindById(int userId)
     {
         const string sql = """
@@ -13,14 +19,7 @@ public class AccountRepositoryAdapter : IAccountRepositoryPort
                            from "Schema"."Accounts"
                            where UserID = @userId
                            """;
-        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
-        {
-            Host = "localhost",
-            Port = 5432,
-            Username = "postgres",
-            Password = "12345",
-            SslMode = SslMode.Prefer,
-        }.ConnectionString);
+        using var connection = new NpgsqlConnection(ConnectionInfo);
         connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
@@ -41,14 +40,7 @@ public class AccountRepositoryAdapter : IAccountRepositoryPort
                            set Money = @money
                            where AccountId = @accountId
                            """;
-        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
-        {
-            Host = "localhost",
-            Port = 5432,
-            Username = "postgres",
-            Password = "12345",
-            SslMode = SslMode.Prefer,
-        }.ConnectionString);
+        using var connection = new NpgsqlConnection(ConnectionInfo);
         connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
@@ -62,14 +54,7 @@ public class AccountRepositoryAdapter : IAccountRepositoryPort
                            insert into "Schema".Accounts ("Money", "UserID")
                            values (@money, @userId)
                            """;
-        using var connection = new NpgsqlConnection(new NpgsqlConnectionStringBuilder
-        {
-            Host = "localhost",
-            Port = 5432,
-            Username = "postgres",
-            Password = "123456",
-            SslMode = SslMode.Prefer,
-        }.ConnectionString);
+        using var connection = new NpgsqlConnection(ConnectionInfo);
         connection.Open();
 
         using var command = new NpgsqlCommand(sql, connection);
