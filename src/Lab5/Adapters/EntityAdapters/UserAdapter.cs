@@ -19,6 +19,14 @@ public class UserAdapter : IUserPort
         _historyRepository = historyRepository;
     }
 
+    public UserAdapter(User user, IUserRepositoryPort userRepository, IAccountRepositoryPort accountRepository, IHistoryRepository historyRepository)
+    {
+        _accountRepository = accountRepository;
+        _userRepository = userRepository;
+        _historyRepository = historyRepository;
+        _user = user;
+    }
+
     public decimal? ShowBalance()
     {
         if (_user is null) return null;

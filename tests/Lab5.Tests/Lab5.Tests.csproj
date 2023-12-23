@@ -21,7 +21,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\Lab5\Adapters\Adapters.csproj" />
       <ProjectReference Include="..\..\src\Lab5\CoreData\CoreData.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageVersion Update="NSubstitute" Version="5.1.0" />
     </ItemGroup>
 
 </Project>
